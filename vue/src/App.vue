@@ -1,28 +1,25 @@
 <template>
-  <div id="app">
+  <v-app style="background: #F0F2F5;">
+    <!-- style="background-image: linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%);" -->
     <router-view></router-view>
-  </div>
+  </v-app>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+::-webkit-scrollbar {
+  height:0;
+  width:0;
+  border-radius: 4px;
+  background: transparent;
+  transition: all 0.3s ease;
 }
 
-#nav {
-  padding: 30px;
+::-webkit-scrollbar:hover {
+  background: transparent;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+::-webkit-scrollbar-thumb {
+  background:transparent;
+  border-radius: 4px;
 }
 </style>
