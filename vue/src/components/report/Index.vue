@@ -1,5 +1,7 @@
 <template>
   <div>
+    <add-disciple class="mb-5"></add-disciple>
+
     <v-data-table :headers="headers" :items="discipleList">
 
       <template v-slot:item.last_name="{ item }">
@@ -22,10 +24,12 @@
   </div>
 </template>
 <script>
+import addDisciple from './actions/Add.vue'
 import editDisciple from './actions/Edit.vue'
 import deleteDisciple from './actions/Delete.vue'
 export default {
   components: {
+    'add-disciple': addDisciple,
     'edit-disciple': editDisciple,
     'delete-disciple': deleteDisciple
   },

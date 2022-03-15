@@ -38,7 +38,7 @@ class DiscipleController extends Controller
      */
     public function store(StoreDiscipleRequest $request)
     {
-        //
+        return 'gerard';
     }
 
     /**

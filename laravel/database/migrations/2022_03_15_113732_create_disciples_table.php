@@ -27,7 +27,7 @@ class CreateDisciplesTable extends Migration
             $table->string('address');
             $table->string('birthday');
             $table->integer('age');
-            $table->integer('position'); // 0: disciple; 1: leader; 2: primary;
+            $table->integer('position'); // 0: VIP, 1: disciple; 2: leader; 3: primary;
             
             $table->integer('cell_leader_id');
             $table->integer('primary_leader_id');
