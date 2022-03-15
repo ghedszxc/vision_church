@@ -7,7 +7,6 @@ import vueResource from 'vue-resource'
 
 Vue.use(vueResource)
 Vue.http.options.root = "http://127.0.0.1:8000"
-Vue.http.options.emulateJSON = true
 Vue.config.productionTip = false
 
 new Vue({

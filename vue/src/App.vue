@@ -4,7 +4,13 @@
     <router-view></router-view>
   </v-app>
 </template>
-
+<script>
+export default {
+  data:() => ({
+    //
+  })
+}
+</script>
 <style lang="scss">
 ::-webkit-scrollbar {
   height:0;

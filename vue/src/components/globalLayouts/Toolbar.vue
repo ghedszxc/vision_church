@@ -1,9 +1,9 @@
 <template>
     <div>
         <v-app-bar app >
-            <v-toolbar-title class="text-capitalize">
+            <!-- <v-toolbar-title class="text-capitalize">
                 {{$route.path.split("/")[1]}}
-            </v-toolbar-title>
+            </v-toolbar-title> -->
 
 
             <v-spacer></v-spacer>
@@ -25,7 +25,7 @@
                     <v-btn rounded text class="primary" v-bind="attrs" v-on="on">
                         <v-icon class="mr-2" size="20">mdi-account</v-icon>
                         Auth Name
-                        <v-icon class="mr-2" size="20">mdi-arrow-down</v-icon>
+                        <v-icon class="ml-2">mdi-menu-down</v-icon>
                     </v-btn>
                 </template>
                 <v-list>

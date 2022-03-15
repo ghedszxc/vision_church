@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\Disciple;
 use App\Http\Requests\StoreDiscipleRequest;
 use App\Http\Requests\UpdateDiscipleRequest;
@@ -15,7 +17,7 @@ class DiscipleController extends Controller
      */
     public function index()
     {
-        return 'gerard pogi';
+        return Disciple::all();
     }
 
     /**
