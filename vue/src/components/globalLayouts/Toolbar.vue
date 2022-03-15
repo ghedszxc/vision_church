@@ -20,10 +20,21 @@
             </v-btn>
 
             <v-spacer></v-spacer>
-            <v-btn rounded text class="primary">
-                <v-icon class="mr-2" size="20">mdi-account</v-icon>
-                Auth Name
-            </v-btn>
+            <v-menu offset-y open-on-hover bottom>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn rounded text class="primary" v-bind="attrs" v-on="on">
+                        <v-icon class="mr-2" size="20">mdi-account</v-icon>
+                        Auth Name
+                        <v-icon class="mr-2" size="20">mdi-arrow-down</v-icon>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item link>
+                        <v-list-item-title>Log out</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+            
         </v-app-bar>
     </div>
 </template>
