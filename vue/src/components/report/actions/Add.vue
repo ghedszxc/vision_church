@@ -87,18 +87,24 @@
                             </v-flex>
                             <v-flex xs12 md3>
                                 <v-select
-                                    :items="statusList"
                                     v-model="form.status"
                                     placeholder="Status"
                                     outlined
+
+                                    :items="statusList"
+                                    item-text="text"
+                                    item-value="id"
                                 ></v-select>
                             </v-flex>
                             <v-flex xs12 md3 class="px-2">
                                 <v-select
-                                    :items="networkList"
                                     v-model="form.network"
                                     placeholder="Network"
                                     outlined
+
+                                    :items="networkList"
+                                    item-text="text"
+                                    item-value="id"
                                 ></v-select>
                             </v-flex>
                             <v-flex xs12 md3 class="pr-2">
@@ -144,7 +150,10 @@ export default {
         ],
 
         networkList: [
-            'YM', 'M', 'YW', 'W'
+            { id: 0, text: 'YM' },
+            { id: 1, text: 'M' },
+            { id: 2, text: 'YW' },
+            { id: 3, text: 'W' }
         ],
 
         positionList: [

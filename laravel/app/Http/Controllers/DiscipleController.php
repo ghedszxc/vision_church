@@ -36,9 +36,29 @@ class DiscipleController extends Controller
      * @param  \App\Http\Requests\StoreDiscipleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDiscipleRequest $request)
+    public function store(Request $request)
     {
-        return 'gerard';
+        // Disciple::create($request->all());
+        Disciple::create([
+            'last_name' => 'alix',
+            'first_name' => 'raymond',
+            'middle_name' => 'mmmm',
+            'suffix' => 'jrrr',
+            
+            'address' => 'abangan sur',
+            'age' => 0,
+            'birthday' => '10-10-1023',
+
+            'status' => 0,
+            'postion' => 0,
+            'network' => 0,
+
+            'cell_leader_id' => 0,
+            'primary_leader_id' => 0,
+            
+            
+        ]);
+        return $request->all();
     }
 
     /**
