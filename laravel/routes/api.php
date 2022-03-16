@@ -24,4 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::group(["middleware" =>'auth:api'], function() { });
 Route::middleware('api')->group(function () {
     Route::resource('disciple', DiscipleController::class);
+    // Route::post('disciple/registerNewDisciple', [DiscipleController::class, 'registerNewDisciple']);
 });

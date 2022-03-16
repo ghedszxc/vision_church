@@ -20,7 +20,7 @@
                 <v-card-text class="mt-4">
                     <v-form ref="form">
                         <v-layout wrap>
-                            <v-flex xs12 class="mb-5">
+                            <v-flex xs12 class="mb-7">
                                 <span class="overline">Basic Information</span>
                                 <v-divider style="margin: -1.7% 0% 0% 17%;"></v-divider>
                             </v-flex>
@@ -28,6 +28,7 @@
                                 <v-text-field
                                     v-model="form.last_name"
                                     placeholder="Surname"
+                                    label="Surname"
                                     outlined
                                 ></v-text-field>
                             </v-flex>
@@ -35,6 +36,7 @@
                                 <v-text-field
                                     v-model="form.first_name"
                                     placeholder="Given Name"
+                                    label="Given Name"
                                     outlined
                                 ></v-text-field>
                             </v-flex>
@@ -42,6 +44,7 @@
                                 <v-text-field
                                     v-model="form.middle_name"
                                     placeholder="Middle Name"
+                                    label="Middle Name"
                                     outlined
                                 ></v-text-field>
                             </v-flex>
@@ -49,6 +52,7 @@
                                 <v-text-field
                                     v-model="form.suffix"
                                     placeholder="Suffix"
+                                    label="Suffix"
                                     outlined
                                 ></v-text-field>
                             </v-flex>
@@ -65,6 +69,7 @@
                                         <v-text-field
                                             v-model="form.birthday"
                                             placeholder="Birthday"
+                                            label="Birthday"
                                             outlined
                                             v-bind="attrs"
                                             v-on="on"
@@ -77,18 +82,20 @@
                                 <v-text-field
                                     v-model="form.address"
                                     placeholder="Address"
+                                    label="Address"
                                     outlined
                                 ></v-text-field>
                             </v-flex>
                             
-                            <v-flex xs12 class="mb-5">
+                            <v-flex xs12 class="mb-7">
                                 <span class="overline">Church Status</span>
-                                <v-divider style="margin: -1.7% 0% 0% 17%;"></v-divider>
+                                <v-divider style="margin: -1.7% 0% 0% 14%;"></v-divider>
                             </v-flex>
                             <v-flex xs12 md3>
                                 <v-select
                                     v-model="form.status"
                                     placeholder="Status"
+                                    label="Status"
                                     outlined
 
                                     :items="statusList"
@@ -100,6 +107,7 @@
                                 <v-select
                                     v-model="form.network"
                                     placeholder="Network"
+                                    label="Network"
                                     outlined
 
                                     :items="networkList"
@@ -110,7 +118,8 @@
                             <v-flex xs12 md3 class="pr-2">
                                 <v-select
                                     v-model="form.cell_leader_id"
-                                    placeholder="Network"
+                                    placeholder="Cell Leader"
+                                    label="Cell Leader"
                                     outlined
 
                                     :items="discipleList"
@@ -121,7 +130,8 @@
                             <v-flex xs12 md3>
                                 <v-select
                                     v-model="form.primary_leader_id"
-                                    placeholder="Network"
+                                    placeholder="Primary Leader"
+                                    label="Primary Leader"
                                     outlined
 
                                     :items="discipleList"

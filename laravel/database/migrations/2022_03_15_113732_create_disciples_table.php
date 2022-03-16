@@ -18,19 +18,19 @@ class CreateDisciplesTable extends Migration
             
             $table->string('last_name');
             $table->string('first_name');
-            $table->string('middle_name');
-            $table->string('suffix');
+            $table->string('middle_name')->nullable();
+            $table->string('suffix')->nullable();
 
             $table->integer('status'); // 0-4: 1T-5T; 5: RD;
             $table->integer('network'); // 0: ym; 1: m; 2: yw; 3: w;
             
             $table->string('address');
             $table->string('birthday');
-            $table->integer('age');
-            $table->integer('position'); // 0: VIP, 1: disciple; 2: leader; 3: primary;
+            $table->integer('age')->nullable();
+            $table->integer('position')->default(0); // 0: VIP, 1: disciple; 2: leader; 3: primary;
             
-            $table->integer('cell_leader_id');
-            $table->integer('primary_leader_id');
+            $table->integer('cell_leader_id')->default(0);
+            $table->integer('primary_leader_id')->default(0);
 
             $table->timestamps();
         });

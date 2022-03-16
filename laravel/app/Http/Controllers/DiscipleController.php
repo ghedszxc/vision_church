@@ -39,23 +39,37 @@ class DiscipleController extends Controller
     public function store(Request $request)
     {
         // Disciple::create($request->all());
-        Disciple::create([
-            'last_name' => 'alix',
-            'first_name' => 'raymond',
-            'middle_name' => 'mmmm',
-            'suffix' => 'jrrr',
-            
-            'address' => 'abangan sur',
-            'age' => 0,
-            'birthday' => '10-10-1023',
+        
 
-            'status' => 0,
-            'postion' => 0,
-            'network' => 0,
+        
+        // 'last_name' => $request['last_name'],
+        // 'first_name' => $request['first_name'],
+        // 'middle_name' => $request['middle_name'],
+        // 'suffix' => $request['suffix'],
+        
+        // 'status' => $request['status'],
+        // 'network' => $request['network'],
+
+        // 'address' => $request['address'],
+        // 'birthday' => $request['birthday'],
+        // 'age' => $request['age'],
+        Disciple::create([
+            'last_name' => $request['last_name'],
+            'first_name' => $request['first_name'],
+            'middle_name' => $request['middle_name'],
+            'suffix' => $request['suffix'],
+            
+            'status' => $request['status'],
+            'network' => $request['network'],
+
+            'address' => $request['address'],
+            'birthday' => $request['birthday'],
+            'age' => $request['age'],
+
+            'position' => 2,
 
             'cell_leader_id' => 0,
-            'primary_leader_id' => 0,
-            
+            'primary_leader_id' => 0
             
         ]);
         return $request->all();
