@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 use App\Models\Disciple;
@@ -39,20 +38,6 @@ class DiscipleController extends Controller
     public function store(Request $request)
     {
         // Disciple::create($request->all());
-        
-
-        
-        // 'last_name' => $request['last_name'],
-        // 'first_name' => $request['first_name'],
-        // 'middle_name' => $request['middle_name'],
-        // 'suffix' => $request['suffix'],
-        
-        // 'status' => $request['status'],
-        // 'network' => $request['network'],
-
-        // 'address' => $request['address'],
-        // 'birthday' => $request['birthday'],
-        // 'age' => $request['age'],
         Disciple::create([
             'last_name' => $request['last_name'],
             'first_name' => $request['first_name'],

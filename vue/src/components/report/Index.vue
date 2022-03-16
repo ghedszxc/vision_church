@@ -66,7 +66,6 @@ export default {
   mounted(){
     this.$http.get('api/disciple').then(response => {
       this.$store.commit('GET_DISCIPLE_LIST', response.body)
-      
     })
   }
 }

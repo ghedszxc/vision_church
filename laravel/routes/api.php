@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DiscipleController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::group(["middleware" =>'auth:api'], function() { });
 Route::middleware('api')->group(function () {
     Route::resource('disciple', DiscipleController::class);
+    Route::resource('event', EventController::class);
     // Route::post('disciple/registerNewDisciple', [DiscipleController::class, 'registerNewDisciple']);
 });

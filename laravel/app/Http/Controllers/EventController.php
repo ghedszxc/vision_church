@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
@@ -15,7 +16,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return Event::all();
     }
 
     /**
@@ -34,9 +35,18 @@ class EventController extends Controller
      * @param  \App\Http\Requests\StoreEventRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreEventRequest $request)
+    public function store(Request $request)
     {
-        //
+        Event::create([
+            'name' => $request['name'],
+            'start' => $request['start'],
+            'end' => $request['end'],
+            'color' => '#E4E4E4',
+
+            'creator_id' => 1,
+            'timed' => 0
+        ]);
+        return $request->all();
     }
 
     /**
