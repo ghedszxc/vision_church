@@ -2,32 +2,50 @@
     <div>
       <create-event></create-event>
       <v-calendar
-        ref="calendar"
-        v-model="value"
+        type="month"
         :weekdays="weekday"
-        :type="type"
+        event-overlap-mode="stack"
+        
         :events="events"
-        :event-overlap-mode="mode"
-        :event-overlap-threshold="30"
-        :event-color="getEventColor"
-        @change="getEvents"
+        @click:event="showEvent"
       ></v-calendar>
+
+      <v-dialog v-model="eventInfoDialog" max-width="1000">
+        <v-card>
+          <v-card-title>
+            {{selectedEvent.name}}
+            <v-spacer></v-spacer>
+            
+            <v-btn class="info mr-2" @click="eventInfoDialog = false">
+              Register 1T
+            </v-btn>
+
+            <v-btn class="error" @click="eventInfoDialog = false">
+              Close
+            </v-btn>
+          </v-card-title>
+          <v-card-text>
+            <update-attendance :selectedEvent="selectedEvent"></update-attendance>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
     </div>
 </template>
 <script>
 import createEvent from './actions/Add.vue'
+import updateAttendance from './UpdateAttendance.vue'
 export default {
   components: {
-    'create-event': createEvent
+    'create-event': createEvent,
+    'update-attendance': updateAttendance
   },
   data: () => ({
-    type: 'month',
+    selectedEvent: {},
+    eventInfoDialog: false,
 
-    mode: 'stack',
+    events: [],
     weekday: [0, 1, 2, 3, 4, 5, 6],
 
-    value: '',
-    events: [],
     colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     names: ['Sundary 1st Service', 'Sundary 2nd Service', 'Evening Prayer', 'Extreme Net'],
   }),
@@ -38,6 +56,7 @@ export default {
   },
   mounted(){
     this.$http.get('api/event').then(response => {
+      console.log(":D", response.body)
       this.$store.commit('GET_EVENT_LIST', response.body)
 
       response.body.map(data => {
@@ -53,48 +72,10 @@ export default {
     })
   },
   methods: {
-    getEvents ({ start, end }) {
-      // const events = []
-
-      // const min = new Date(`${start.date}T00:00:00`)
-      // const max = new Date(`${end.date}T23:59:59`)
-      // const days = (max.getTime() - min.getTime()) / 86400000
-      // const eventCount = this.rnd(days, days + 20)
-
-      // for (let i = 0; i < eventCount; i++) {
-      //   const allDay = this.rnd(0, 3) === 0
-      //   const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-      //   const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-      //   const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-      //   const second = new Date(first.getTime() + secondTimestamp)
-
-      //   console.log("??", allDay)
-      //   events.push({
-      //     name: this.names[this.rnd(0, this.names.length - 1)],
-      //     start: first,
-      //     end: second,
-      //     color: this.colors[this.rnd(0, this.colors.length - 1)],
-      //     timed: !allDay,
-      //   })
-      // }
-      // this.events = events
-
-      console.log("start: ", start)
-      console.log("end: ", end)
-      // this.events.push({
-      //   name: this.names[0],
-      //   start: '2022-03-16 00:15',
-      //   end: '2022-03-16 12:00',
-      //   color: this.colors[this.rnd(0, this.colors.length - 1)],
-      //   timed: true,
-      // })
-    },
-    getEventColor (event) {
-      return event.color
-    },
-    rnd (a, b) {
-      return Math.floor((b - a + 1) * Math.random()) + a
-    },
+    showEvent({ event }){
+      this.selectedEvent = event
+      this.eventInfoDialog = true
+    }
   }
 }
 </script>

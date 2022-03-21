@@ -26,11 +26,13 @@ class CreateDisciplesTable extends Migration
             
             $table->string('address');
             $table->string('birthday');
-            $table->integer('age')->nullable();
-            $table->integer('position')->default(0); // 0: VIP, 1: disciple; 2: leader; 3: primary;
+            $table->integer('age')->default(0);
             
+            $table->integer('inviter_id')->default(0);
             $table->integer('cell_leader_id')->default(0);
             $table->integer('primary_leader_id')->default(0);
+            
+            $table->integer('is_archive')->default(0);
 
             $table->timestamps();
         });

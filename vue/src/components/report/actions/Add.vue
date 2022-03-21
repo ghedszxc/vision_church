@@ -2,18 +2,18 @@
     <div style="display: inline-block;">
         <v-btn rounded text class="primary" @click="addDiscipleDialog = true">
             <v-icon class="mr-2" size="20">mdi-plus</v-icon>
-            Register Disciple
+            {{title_text}}
         </v-btn>
 
         <v-dialog v-model="addDiscipleDialog" persistent max-width="1000">
             <v-card>
                 <v-card-title>
-                    Register Disciple
+                    {{title_text}}
                     <v-spacer></v-spacer>
                     <v-btn text color="success" @click="addDisciple()">
                         Add
                     </v-btn>
-                    <v-btn text color="error" @click="addDiscipleDialog = false">
+                    <v-btn text color="error" @click="clearForm()">
                         close
                     </v-btn>
                 </v-card-title>
@@ -93,18 +93,6 @@
                             </v-flex>
                             <v-flex xs12 md3>
                                 <v-select
-                                    v-model="form.status"
-                                    placeholder="Status"
-                                    label="Status"
-                                    outlined
-
-                                    :items="statusList"
-                                    item-text="text"
-                                    item-value="id"
-                                ></v-select>
-                            </v-flex>
-                            <v-flex xs12 md3 class="px-2">
-                                <v-select
                                     v-model="form.network"
                                     placeholder="Network"
                                     label="Network"
@@ -115,7 +103,19 @@
                                     item-value="id"
                                 ></v-select>
                             </v-flex>
-                            <v-flex xs12 md3 class="pr-2">
+                            <v-flex xs12 md3 class="px-2">
+                                <v-select
+                                    v-model="form.status"
+                                    placeholder="Status"
+                                    label="Status"
+                                    outlined
+
+                                    :items="statusList"
+                                    item-text="text"
+                                    item-value="id"
+                                ></v-select>
+                            </v-flex>
+                            <v-flex xs12 md3 class="pr-2" v-if="form.status">
                                 <v-select
                                     v-model="form.cell_leader_id"
                                     placeholder="Cell Leader"
@@ -123,11 +123,17 @@
                                     outlined
 
                                     :items="discipleList"
-                                    item-text="last_name"
-                                    item-value="id"
-                                ></v-select>
+                                    item-value="id">
+                                
+                                    <template slot="selection" slot-scope="data">
+                                        {{ data.item.last_name }}, {{ data.item.first_name }}
+                                    </template>
+                                    <template slot="item" slot-scope="data">
+                                        {{ data.item.last_name }}, {{ data.item.first_name }}
+                                    </template>
+                                </v-select>
                             </v-flex>
-                            <v-flex xs12 md3>
+                            <v-flex xs12 md3 v-if="form.status">
                                 <v-select
                                     v-model="form.primary_leader_id"
                                     placeholder="Primary Leader"
@@ -135,9 +141,33 @@
                                     outlined
 
                                     :items="discipleList"
-                                    item-text="last_name"
-                                    item-value="id"
-                                ></v-select>
+                                    item-value="id">
+                                
+                                    <template slot="selection" slot-scope="data">
+                                        {{ data.item.last_name }}, {{ data.item.first_name }}
+                                    </template>
+                                    <template slot="item" slot-scope="data">
+                                        {{ data.item.last_name }}, {{ data.item.first_name }}
+                                    </template>
+                                </v-select>
+                            </v-flex>
+                            <v-flex xs12 md6 v-if="!form.status">
+                                <v-select
+                                    v-model="form.inviter_id"
+                                    placeholder="Inviter"
+                                    label="Inviter"
+                                    outlined
+
+                                    :items="discipleList"
+                                    item-value="id">
+                                
+                                    <template slot="selection" slot-scope="data">
+                                        {{ data.item.last_name }}, {{ data.item.first_name }}
+                                    </template>
+                                    <template slot="item" slot-scope="data">
+                                        {{ data.item.last_name }}, {{ data.item.first_name }}
+                                    </template>
+                                </v-select>
                             </v-flex>
                         </v-layout>
                     </v-form>
@@ -149,28 +179,8 @@
 </template>
 <script>
 export default {
+    props: ['title_text'],
     data:() => ({
-        statusList: [
-            { id: 0, text: '1T', color: 'error' },
-            { id: 1, text: '2T', color: 'secondary' },
-            { id: 2, text: '3T', color: 'success' },
-            { id: 3, text: '4T', color: 'warning' },
-            { id: 4, text: '5T', color: 'accent' },
-            { id: 5, text: 'RD', color: 'primary' },
-        ],
-
-        networkList: [
-            { id: 0, text: 'YM' },
-            { id: 1, text: 'M' },
-            { id: 2, text: 'YW' },
-            { id: 3, text: 'W' }
-        ],
-
-        positionList: [
-            'VIP', 'Disciple', 'Leader', 'Primary'
-        ],
-        
-
         addDiscipleDialog: false,
         menu: false,
 
@@ -178,9 +188,9 @@ export default {
             last_name: '', first_name: '', middle_name: '', suffix: '',
             status: 0, network: 0,
 
-            address: '', birthday: '', age: 0, position: 0,
-
-            cell_leader_id: 0, primary_leader_id: 0
+            address: '', birthday: '', age: 0,
+            
+            cell_leader_id: 0, primary_leader_id: 0, inviter_id: 0
         }
     }),
     computed: {
@@ -189,9 +199,23 @@ export default {
         }
     },
     methods:{
+        clearForm(){
+            // this.$refs.form.reset()
+            this.addDiscipleDialog = false
+
+            this.form = {
+                last_name: '', first_name: '', middle_name: '', suffix: '',
+                status: 0, network: 0,
+
+                address: '', birthday: '', age: 0,
+                
+                cell_leader_id: 0, primary_leader_id: 0, inviter_id: 0
+            }
+        },
         addDisciple(){
             this.$http.post('api/disciple', this.form).then(response => {
-                console.log("??", response.body)
+                this.$store.dispatch("addNewDisciple", response.body)
+                this.clearForm()
             })
         }
     }

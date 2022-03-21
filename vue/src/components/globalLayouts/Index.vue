@@ -2,18 +2,12 @@
     <v-app>
         <v-main>
             <tool-bar></tool-bar>
-            <!-- <v-snackbar top
+            <v-snackbar top
                 v-model="snackBar.snackbar"
                 :timeout="snackBar.timeout"
                 :color="snackBar.color">
                 {{ snackBar.message }}
-                <template v-slot:action="{ attrs }">
-                    <v-btn small icon v-bind="attrs" @click="hideSnackBar()">
-                    <v-icon small color="white">close</v-icon>
-                    </v-btn>
-                </template>
-
-            </v-snackbar> -->
+            </v-snackbar>
 
             <router-view class="pa-5"></router-view>
         </v-main>

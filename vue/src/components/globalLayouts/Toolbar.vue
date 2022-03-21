@@ -1,11 +1,6 @@
 <template>
     <div>
         <v-app-bar app >
-            <!-- <v-toolbar-title class="text-capitalize">
-                {{$route.path.split("/")[1]}}
-            </v-toolbar-title> -->
-
-
             <v-spacer></v-spacer>
             <v-btn icon :class="$route.path == '/dashboard' ? 'primary' : ''" @click="$router.push('/dashboard')">
                 <v-icon :color="$route.path == '/dashboard' ? 'white' : ''">mdi-view-dashboard</v-icon>
@@ -20,7 +15,7 @@
             </v-btn>
 
             <v-spacer></v-spacer>
-            <v-menu offset-y open-on-hover bottom>
+            <!-- <v-menu offset-y open-on-hover bottom>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn rounded text class="primary" v-bind="attrs" v-on="on">
                         <v-icon class="mr-2" size="20">mdi-account</v-icon>
@@ -33,8 +28,7 @@
                         <v-list-item-title>Log out</v-list-item-title>
                     </v-list-item>
                 </v-list>
-            </v-menu>
-            
+            </v-menu> -->
         </v-app-bar>
     </div>
 </template>

@@ -25,12 +25,14 @@
                                 <v-divider style="margin: -1.7% 0% 0% 17%;"></v-divider>
                             </v-flex>
                             <v-flex xs12 md4>
-                                <v-text-field
+                                <v-select
                                     v-model="form.name"
-                                    placeholder="Event Name"
                                     label="Event Name"
+                                    placeholder="Event Name"
+
+                                    :items="events"
                                     outlined
-                                ></v-text-field>
+                                ></v-select>
                             </v-flex>
                             <v-flex xs12 md4 class="px-2">
                                 <v-menu
@@ -50,7 +52,8 @@
                                             v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <v-time-picker landscape v-model="form.start" @input="menu_01 = false"></v-time-picker>
+                                    <v-datetime-picker v-model="form.start"></v-datetime-picker>
+                                    <v-time-picker landscape v-model="form.start"></v-time-picker>
                                 </v-menu>
                             </v-flex>
                             <v-flex xs12 md4>
@@ -85,6 +88,13 @@
 <script>
 export default {
     data:() => ({
+        events: [
+            '1st Service',
+            '2nd Service',
+            'Evening Prayer',
+            'Extreme Net',
+            'Adult Net'
+        ],
         createEventDialog: false,
         menu_01: false,
         menu_02: false,
