@@ -56,8 +56,8 @@
                             <template v-slot:item.inviter_id="{ item }">
                                 <span class="text-truncate">
                                     {{
-                                        discipleList.find(find => find.inviter_id == item.inviter_id) ?
-                                        `${discipleList.find(find => find.inviter_id == item.inviter_id).last_name}, ${discipleList.find(find => find.inviter_id == item.inviter_id).first_name}` : ''
+                                        discipleList.find(find => find.id == item.inviter_id) ?
+                                        `${discipleList.find(find => find.id == item.inviter_id).last_name}, ${discipleList.find(find => find.id == item.inviter_id).first_name}` : ''
                                     }}
                                 </span>
                             </template>
@@ -65,8 +65,8 @@
                             <template v-slot:item.cell_leader_id="{ item }">
                                 <span class="text-truncate">
                                     {{
-                                        discipleList.find(find => find.cell_leader_id == item.cell_leader_id) ?
-                                        `${discipleList.find(find => find.cell_leader_id == item.cell_leader_id).last_name}, ${discipleList.find(find => find.cell_leader_id == item.cell_leader_id).first_name}` : ''
+                                        discipleList.find(find => find.id == item.cell_leader_id) ?
+                                        `${discipleList.find(find => find.id == item.cell_leader_id).last_name}, ${discipleList.find(find => find.id == item.cell_leader_id).first_name}` : ''
                                     }}
                                 </span>
                             </template>
@@ -74,8 +74,8 @@
                             <template v-slot:item.primary_leader_id="{ item }">
                                 <span class="text-truncate">
                                     {{
-                                        discipleList.find(find => find.primary_leader_id == item.primary_leader_id) ?
-                                        `${discipleList.find(find => find.primary_leader_id == item.primary_leader_id).last_name}, ${discipleList.find(find => find.primary_leader_id == item.primary_leader_id).first_name}` : ''
+                                        discipleList.find(find => find.id == item.primary_leader_id) ?
+                                        `${discipleList.find(find => find.id == item.primary_leader_id).last_name}, ${discipleList.find(find => find.id == item.primary_leader_id).first_name}` : ''
                                     }}
                                 </span>
                             </template>
