@@ -13,7 +13,10 @@ export default new Vuex.Store({
     archivedDiscipleList: [],
 
     // EVENTS
-    eventList: []
+    eventList: [],
+
+    // ATTENDEES
+    attendeeList: []
   },
   mutations: {
     // GLOBAL
@@ -33,7 +36,11 @@ export default new Vuex.Store({
     GET_EVENT_LIST: (state, payload) => {
       state.eventList = payload
     },
-
+    
+    // ATTENDEES
+    GET_ATTENDEE_LIST: (state, payload) => {
+      state.attendeeList = payload
+    },
   },
   actions: {
     // DISCIPLES
@@ -56,6 +63,30 @@ export default new Vuex.Store({
         commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${state.discipleList[find_disciple].last_name}, ${state.discipleList[find_disciple].first_name} is inactive.` })
         state.discipleList.splice(find_disciple,1)
       }
+    },
+
+    // EVENTS
+    addNewEvent({commit, state},payload) {
+      state.eventList.push(payload)
+      commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${payload.name} is created.` })
+    },
+    
+    // ATTENDEES
+    addNewAttendee({state}) {
+      state.attendeeList.push({
+        id: '',
+        status: '',
+
+        address: '',
+        network: '',
+
+        inviter_id: 0,
+        cell_leader_id: 0,
+        primary_leader_id: 0
+      })
+
+      // state.eventList.push(payload)
+      // commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${payload.name} is created.` })
     },
   },
   modules: {

@@ -41,7 +41,7 @@ class EventController extends Controller
             'name' => $request['name'],
             'start' => $request['start'],
             'end' => $request['end'],
-            'color' => '#E4E4E4',
+            'color' => $request['color'],
 
             'creator_id' => 1,
             'timed' => 0
@@ -55,9 +55,10 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show($id)
     {
-        //
+        return 'gerard';
+        // return Event::where('id', $id);
     }
 
     /**

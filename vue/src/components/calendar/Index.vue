@@ -6,20 +6,18 @@
         :weekdays="weekday"
         event-overlap-mode="stack"
         
-        :events="events"
+        :events="eventList"
         @click:event="showEvent"
       ></v-calendar>
 
-      <v-dialog v-model="eventInfoDialog" max-width="1000">
+      <v-dialog v-model="eventInfoDialog" max-width="1300">
         <v-card>
-          <v-card-title>
+          <v-card-title :style="{ color: selectedEvent.color }">
             {{selectedEvent.name}}
             <v-spacer></v-spacer>
             
-            <v-btn class="info mr-2" @click="eventInfoDialog = false">
-              Register 1T
-            </v-btn>
-
+            <add-disciple :title_text="'Register 1T'"></add-disciple>
+            <!-- <add-attendee :title_text="'Register 1T'"></add-attendee> -->
             <v-btn class="error" @click="eventInfoDialog = false">
               Close
             </v-btn>
@@ -33,20 +31,22 @@
 </template>
 <script>
 import createEvent from './actions/Add.vue'
+// import addAttendee from './actions/AddAttendee.vue'
+import addDisciple from '../report/actions/Add.vue'
 import updateAttendance from './UpdateAttendance.vue'
 export default {
   components: {
+    // 'add-attendee': addAttendee,
     'create-event': createEvent,
+    'add-disciple': addDisciple,
     'update-attendance': updateAttendance
   },
   data: () => ({
     selectedEvent: {},
     eventInfoDialog: false,
 
-    events: [],
+    // events: [],
     weekday: [0, 1, 2, 3, 4, 5, 6],
-
-    colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     names: ['Sundary 1st Service', 'Sundary 2nd Service', 'Evening Prayer', 'Extreme Net'],
   }),
   computed: {
@@ -56,25 +56,17 @@ export default {
   },
   mounted(){
     this.$http.get('api/event').then(response => {
-      console.log(":D", response.body)
       this.$store.commit('GET_EVENT_LIST', response.body)
-
-      response.body.map(data => {
-        
-        this.events.push({
-          name: data.name,
-          start: data.start,
-          end: data.end,
-          color: data.color,
-          timed: true,
-        })
-      })
     })
   },
   methods: {
     showEvent({ event }){
-      this.selectedEvent = event
-      this.eventInfoDialog = true
+      this.$http.get(`api/attendee/${event.id}`).then(response => {
+        console.log("RES: ", response.body)
+        
+        this.selectedEvent = event
+        this.eventInfoDialog = true
+      })
     }
   }
 }

@@ -52,7 +52,7 @@
                                             v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <v-datetime-picker v-model="form.start"></v-datetime-picker>
+                                    <!-- <v-datetime-picker v-model="form.start"></v-datetime-picker> -->
                                     <v-time-picker landscape v-model="form.start"></v-time-picker>
                                 </v-menu>
                             </v-flex>
@@ -74,7 +74,7 @@
                                             v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <v-time-picker landscape v-model="form.end" @input="menu_02 = false"></v-time-picker>
+                                    <v-time-picker landscape v-model="form.end"></v-time-picker>
                                 </v-menu>
                             </v-flex>
                         </v-layout>
@@ -121,10 +121,12 @@ export default {
                 name: this.form.name,
                 start: `${year}-${mm}-${dd} ${this.form.start}`,
                 end: `${year}-${mm}-${dd} ${this.form.end}`,
+                color: `#${Math.floor(Math.random()*16777215).toString(16)}`
             }
             
             this.$http.post('api/event', data).then(response => {
-                console.log("??", response.body)
+                this.$store.dispatch('addNewEvent', response.body)
+                this.createEventDialog = false
             })
         }
     }

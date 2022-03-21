@@ -1,6 +1,6 @@
 <template>
     <div style="display: inline-block;">
-        <v-btn rounded text class="primary" @click="addDiscipleDialog = true">
+        <v-btn text :class="title_text == 'Register 1T' ? 'primary mr-2' : 'primary'" @click="addDiscipleDialog = true">
             <v-icon class="mr-2" size="20">mdi-plus</v-icon>
             {{title_text}}
         </v-btn>

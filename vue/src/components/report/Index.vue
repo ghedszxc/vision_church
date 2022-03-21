@@ -95,16 +95,6 @@ export default {
   },
   data: () => ({
     showTab: 1,
-
-    statusList: [
-      { id: 0, text: '1T', color: 'error' },
-      { id: 1, text: '2T', color: 'secondary' },
-      { id: 2, text: '3T', color: 'success' },
-      { id: 3, text: '4T', color: 'warning' },
-      { id: 4, text: '5T', color: 'accent' },
-      { id: 5, text: 'RD', color: 'primary' },
-    ],
-
     headers: [
       { text: 'Status', value: 'status' },
       { text: 'Name', value: 'last_name', sortable: false },

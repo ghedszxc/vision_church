@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DiscipleController;
+use App\Http\Controllers\AttendController;
 use App\Http\Controllers\EventController;
 
 /*
@@ -28,5 +29,7 @@ Route::middleware('api')->group(function () {
     // Route::put('disciple/updateStatus', [DiscipleController::class, 'updateStatus']);
 
     Route::resource('event', EventController::class);
+    
+    Route::resource('attendee', AttendController::class);
 
 });

@@ -45,9 +45,9 @@ class AttendController extends Controller
      * @param  \App\Models\Attend  $attend
      * @return \Illuminate\Http\Response
      */
-    public function show(Attend $attend)
+    public function show($id)
     {
-        //
+        return 'mendiola';
     }
 
     /**
