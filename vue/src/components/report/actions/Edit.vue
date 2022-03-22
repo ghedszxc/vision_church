@@ -193,11 +193,6 @@ export default {
         }
 
     }),
-    computed: {
-        discipleList(){
-            return this.$store.state.discipleList;
-        }
-    },
     watch:{
         editDiscipleDialog(to){
             if (to) {

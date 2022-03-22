@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Disciple;
 use App\Http\Requests\StoreDiscipleRequest;
@@ -16,8 +17,8 @@ class DiscipleController extends Controller
      */
     public function index()
     {
-        // return Disciple::all();
-        return Disciple::where('is_archive', 0)->get();
+        // return Disciple::where('is_archive', 0)->get();
+        return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->where('is_archive', 0)->get();
     }
 
     /**
@@ -59,7 +60,7 @@ class DiscipleController extends Controller
             
         ]);
         
-        return Disciple::find($discipleInfo->id);
+        return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->find($discipleInfo->id);
     }
 
     /**
@@ -112,7 +113,7 @@ class DiscipleController extends Controller
             'primary_leader_id' => $request['primary_leader_id']
         ]);
 
-        return Disciple::find($id);
+        return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->find($id);
     }
 
     /**
@@ -128,5 +129,14 @@ class DiscipleController extends Controller
         ]);
 
         return $id;
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        Disciple::where('id', $id)->update([
+            'status' => $request[0]
+        ]);
+
+        return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->find($id);
     }
 }

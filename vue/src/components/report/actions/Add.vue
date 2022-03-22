@@ -1,6 +1,7 @@
 <template>
     <div style="display: inline-block;">
-        <v-btn text :class="title_text == 'Register 1T' ? 'primary mr-2' : 'primary'" @click="addDiscipleDialog = true">
+        <v-btn text :class="title_text == 'Register 1T' ? 'primary mr-2' : 'primary'" @click="addDiscipleDialog = true"
+            :disabled="checkTodayDisabled">
             <v-icon class="mr-2" size="20">mdi-plus</v-icon>
             {{title_text}}
         </v-btn>
@@ -116,58 +117,40 @@
                                 ></v-select>
                             </v-flex>
                             <v-flex xs12 md3 class="pr-2" v-if="form.status">
-                                <v-select
+                                <v-autocomplete
                                     v-model="form.cell_leader_id"
                                     placeholder="Cell Leader"
                                     label="Cell Leader"
                                     outlined
 
                                     :items="discipleList"
+                                    item-text="full_name"
                                     item-value="id">
-                                
-                                    <template slot="selection" slot-scope="data">
-                                        {{ data.item.last_name }}, {{ data.item.first_name }}
-                                    </template>
-                                    <template slot="item" slot-scope="data">
-                                        {{ data.item.last_name }}, {{ data.item.first_name }}
-                                    </template>
-                                </v-select>
+                                </v-autocomplete>
                             </v-flex>
                             <v-flex xs12 md3 v-if="form.status">
-                                <v-select
+                                <v-autocomplete
                                     v-model="form.primary_leader_id"
                                     placeholder="Primary Leader"
                                     label="Primary Leader"
                                     outlined
 
                                     :items="discipleList"
+                                    item-text="full_name"
                                     item-value="id">
-                                
-                                    <template slot="selection" slot-scope="data">
-                                        {{ data.item.last_name }}, {{ data.item.first_name }}
-                                    </template>
-                                    <template slot="item" slot-scope="data">
-                                        {{ data.item.last_name }}, {{ data.item.first_name }}
-                                    </template>
-                                </v-select>
+                                </v-autocomplete>
                             </v-flex>
                             <v-flex xs12 md6 v-if="!form.status">
-                                <v-select
+                                <v-autocomplete
                                     v-model="form.inviter_id"
                                     placeholder="Inviter"
                                     label="Inviter"
                                     outlined
 
                                     :items="discipleList"
+                                    item-text="full_name"
                                     item-value="id">
-                                
-                                    <template slot="selection" slot-scope="data">
-                                        {{ data.item.last_name }}, {{ data.item.first_name }}
-                                    </template>
-                                    <template slot="item" slot-scope="data">
-                                        {{ data.item.last_name }}, {{ data.item.first_name }}
-                                    </template>
-                                </v-select>
+                                </v-autocomplete>
                             </v-flex>
                         </v-layout>
                     </v-form>
@@ -179,7 +162,7 @@
 </template>
 <script>
 export default {
-    props: ['title_text'],
+    props: ['title_text', 'event_id', 'checkTodayDisabled'],
     data:() => ({
         addDiscipleDialog: false,
         menu: false,
@@ -193,11 +176,6 @@ export default {
             cell_leader_id: 0, primary_leader_id: 0, inviter_id: 0
         }
     }),
-    computed: {
-        discipleList(){
-            return this.$store.state.discipleList;
-        }
-    },
     methods:{
         clearForm(){
             // this.$refs.form.reset()
@@ -216,6 +194,14 @@ export default {
             this.$http.post('api/disciple', this.form).then(response => {
                 this.$store.dispatch("addNewDisciple", response.body)
                 this.clearForm()
+
+                if (this.event_id) {
+                    let data = { disciple_id: response.body.id, status: response.body.status, event_id: this.event_id }
+
+                    this.$http.post('api/attendee', data).then(res => {
+                        this.$store.dispatch('addNewAttendee', res.body.disciple_id)
+                    })
+                }
             })
         }
     }

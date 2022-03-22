@@ -18,6 +18,10 @@ import toolbar from './Toolbar.vue'
 export default {
     components: {
         'tool-bar': toolbar
+    },
+    mounted(){
+        this.$http.get('api/event').then(res => { this.$store.commit('GET_EVENT_LIST', res.body) }) // GET ALL EVENTS
+        this.$http.get('api/disciple').then(res => { this.$store.commit('GET_DISCIPLE_LIST', res.body) }) // GET ALL DISCIPLES
     }
 }
 </script>

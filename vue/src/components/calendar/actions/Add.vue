@@ -105,11 +105,6 @@ export default {
             end: ''
         }
     }),
-    computed: {
-        discipleList(){
-            return this.$store.state.discipleList;
-        }
-    },
     methods:{
         addEvent(){
             let date = new Date();

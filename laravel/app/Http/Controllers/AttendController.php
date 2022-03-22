@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\DB;
 
 use App\Models\Attend;
 use App\Http\Requests\StoreAttendRequest;
@@ -34,9 +36,16 @@ class AttendController extends Controller
      * @param  \App\Http\Requests\StoreAttendRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAttendRequest $request)
+    public function store(Request $request)
     {
-        //
+        $attendInfo = Attend::create([
+            'disciple_id' => $request['disciple_id'],
+            'event_id' => $request['event_id'],
+            'status' => $request['status']
+            
+        ]);
+
+        return Attend::find($attendInfo->id);
     }
 
     /**
@@ -47,7 +56,7 @@ class AttendController extends Controller
      */
     public function show($id)
     {
-        return 'mendiola';
+        return Attend::select('*')->where('attends.event_id', $id)->get();
     }
 
     /**
@@ -83,4 +92,6 @@ class AttendController extends Controller
     {
         //
     }
+
+    // public function 
 }

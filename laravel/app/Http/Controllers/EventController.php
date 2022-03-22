@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\DB;
 
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
@@ -37,7 +38,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        Event::create([
+        $eventInfo = Event::create([
             'name' => $request['name'],
             'start' => $request['start'],
             'end' => $request['end'],
@@ -46,7 +47,7 @@ class EventController extends Controller
             'creator_id' => 1,
             'timed' => 0
         ]);
-        return $request->all();
+        return Event::find($eventInfo->id);
     }
 
     /**
@@ -57,7 +58,7 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        return 'gerard';
+        return $id;
         // return Event::where('id', $id);
     }
 
