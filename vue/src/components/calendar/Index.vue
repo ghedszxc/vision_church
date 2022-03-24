@@ -24,6 +24,12 @@
           </v-card-title>
           <v-card-text>
             <v-layout wrap class="mt-5">
+              <v-flex xs12>
+                A: {{attendees}}
+              </v-flex>
+              <v-flex xs12>
+                B: {{attendeeList}}
+              </v-flex>
               <v-flex xs9>
                 <v-layout wrap>
                   <v-flex xs12 class="mb-5">
@@ -32,13 +38,13 @@
                   </v-flex>
                   <v-flex xs12>
                     <v-btn small rounded class="primary mx-2" @click="newAttendee()"
-                        :text="attendees.length != discipleList.length"
-                        :disabled="attendeeList.length == discipleList.length || checkTodayDisabled()">
-                        Add Attendee
+                      :text="attendees.length != discipleList.length"
+                      :disabled="attendeeList.length == discipleList.length">
+                      Add Attendee
                     </v-btn>
 
                     <v-btn small rounded text class="success" @click="updateAttendanceDialog = true"
-                      :disabled="!attendees.length ? true : false || checkTodayDisabled()">
+                      :disabled="!attendees.length ? true : false">
                       Update Attendance
                     </v-btn>
                   </v-flex>
@@ -286,7 +292,8 @@ export default {
   }),
   computed: {
     discipleListFilter(){
-      return this.$store.state.discipleList//.filter(find => this.attendeeList.find(key => key.id != find.id))
+      let unique_ids = [...new Set(this.attendees.concat(this.attendeeList).map(value => value.id))].filter(Number)
+      return this.$store.state.discipleList.filter(find => unique_ids.findIndex(key => key == find.id) == -1)
     },
     attendeeList(){
       return this.$store.state.attendeeList;
@@ -307,40 +314,42 @@ export default {
     },
     insertDiscipleId(id){
       let find_index = this.attendees.findIndex(find => find == id)
-      find_index == -1 ? this.attendees.push(id) : this.attendees.splice(find_index, 1)
+      find_index == -1 ? this.attendees.push({ id : id }) : this.attendees.splice(find_index, 1)
     },
     newAttendee(){
       this.$store.dispatch('addNewAttendee', '')
     },
     updateEventAttendance(){
-      this.formDisabled = true
+      // this.formDisabled = true
       
+      console.log("??", this.attendees)
       forEachOf(this.attendees, (value, index, callback) => {
-        let find_disciple = this.discipleList.find(find => find.id == value)
-        if (find_disciple) {
-          let data = { disciple_id: value, status: find_disciple.status < 5 ? find_disciple.status+1 : find_disciple.status, event_id: this.selectedEvent.id }
+        // let find_disciple = this.discipleList.find(find => find.id == value.id)
+
+        // if (find_disciple) {
+        //   let data = { disciple_id: value.id, status: find_disciple.status < 5 ? find_disciple.status+1 : find_disciple.status, event_id: this.selectedEvent.id }
 
 
-          this.$http.post('api/attendee', data)
-          if (find_disciple.status < 5) {
-            this.$http.put(`api/disciple/updateStatus/${value}`, find_disciple.status+1).then(res => {
-              this.$store.dispatch("updateDisciple", res.body)
-            })
-          }
-        }
+        //   this.$http.post('api/attendee', data)
+        //   if (find_disciple.status < 5) {
+        //     this.$http.put(`api/disciple/updateStatus/${value.id}`, find_disciple.status+1).then(res => {
+        //       this.$store.dispatch("updateDisciple", res.body)
+        //     })
+        //   }
+        // }
 
         callback()
       }, () => {
-        setTimeout(() => {
-          this.$store.dispatch('clearAttendee')
+        // setTimeout(() => {
+        //   this.$store.dispatch('clearAttendee')
 
-          this.$http.get(`api/attendee/${this.selectedEvent.id}`).then(res => {
-            res.body.map(data => { this.$store.dispatch('addNewAttendee', data.disciple_id) })
+        //   this.$http.get(`api/attendee/${this.selectedEvent.id}`).then(res => {
+        //     res.body.map(data => { this.$store.dispatch('addNewAttendee', data.disciple_id) })
 
-            this.formDisabled = false
-            this.updateAttendanceDialog = false
-          })
-        }, 1000)
+        //     this.formDisabled = false
+        //     this.updateAttendanceDialog = false
+        //   })
+        // }, 1000)
       })
     },
     checkTodayDisabled(){
