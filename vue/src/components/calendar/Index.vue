@@ -24,12 +24,6 @@
           </v-card-title>
           <v-card-text>
             <v-layout wrap class="mt-5">
-              <v-flex xs12>
-                A: {{attendees}}
-              </v-flex>
-              <v-flex xs12>
-                B: {{attendeeList}}
-              </v-flex>
               <v-flex xs9>
                 <v-layout wrap>
                   <v-flex xs12 class="mb-5">
@@ -39,12 +33,12 @@
                   <v-flex xs12>
                     <v-btn small rounded class="primary mx-2" @click="newAttendee()"
                       :text="attendees.length != discipleList.length"
-                      :disabled="attendeeList.length == discipleList.length">
+                      :disabled="attendeeList.length == discipleList.length || checkTodayDisabled()">
                       Add Attendee
                     </v-btn>
 
                     <v-btn small rounded text class="success" @click="updateAttendanceDialog = true"
-                      :disabled="!attendees.length ? true : false">
+                      :disabled="!attendees.length ? true : false || checkTodayDisabled()">
                       Update Attendance
                     </v-btn>
                   </v-flex>

@@ -103,4 +103,13 @@ class AttendController extends Controller
     {
         //
     }
+
+    public function addFirstTimer(Request $request)
+    {
+        Attend::create([
+            'disciple_id' => $request['disciple_id'],
+            'event_id' => $request['event_id'],
+            'status' => $request['status']
+        ]);
+    }
 }

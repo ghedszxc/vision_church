@@ -27,9 +27,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('api')->group(function () {
     Route::resource('disciple', DiscipleController::class);
     Route::put('disciple/updateStatus/{id}', [DiscipleController::class, 'updateStatus']);
-
+    
     Route::resource('event', EventController::class);
     
     Route::resource('attendee', AttendController::class);
+    Route::post('attendee/addFirstTimer', [AttendController::class, 'addFirstTimer']);
 
 });

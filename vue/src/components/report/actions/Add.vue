@@ -198,8 +198,8 @@ export default {
                 if (this.event_id) {
                     let data = { disciple_id: response.body.id, status: response.body.status, event_id: this.event_id }
 
-                    this.$http.post('api/attendee', data).then(res => {
-                        this.$store.dispatch('addNewAttendee', res.body.disciple_id)
+                    this.$http.post('api/attendee/addFirstTimer', data).then(() => {
+                        this.$store.dispatch('addNewAttendee', data.disciple_id)
                     })
                 }
             })
