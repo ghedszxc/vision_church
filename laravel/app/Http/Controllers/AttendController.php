@@ -38,14 +38,20 @@ class AttendController extends Controller
      */
     public function store(Request $request)
     {
-        $attendInfo = Attend::create([
-            'disciple_id' => $request['disciple_id'],
-            'event_id' => $request['event_id'],
-            'status' => $request['status']
-            
-        ]);
+        return $request->all();
+        
+        // foreach($request->all() as $userInfo)
+        // {
 
-        return Attend::find($attendInfo->id);
+        // }
+        // $attendInfo = Attend::create([
+        //     'disciple_id' => $request['disciple_id'],
+        //     'event_id' => $request['event_id'],
+        //     'status' => $request['status']
+            
+        // ]);
+
+        // return Attend::find($attendInfo->id);
     }
 
     /**
