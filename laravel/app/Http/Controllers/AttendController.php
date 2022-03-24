@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\DB;
 
 use App\Models\Attend;
+use App\Models\Disciple;
 use App\Http\Requests\StoreAttendRequest;
 use App\Http\Requests\UpdateAttendRequest;
 
@@ -38,20 +39,24 @@ class AttendController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
-        
-        // foreach($request->all() as $userInfo)
-        // {
+        foreach($request['attendees'] as $attendee)
+        {
+            $discipleInfo = Disciple::find($attendee['id']);
 
-        // }
-        // $attendInfo = Attend::create([
-        //     'disciple_id' => $request['disciple_id'],
-        //     'event_id' => $request['event_id'],
-        //     'status' => $request['status']
-            
-        // ]);
+            Attend::create([
+                'disciple_id' => $attendee['id'],
+                'event_id' => $request['event_id'],
+                'status' => $discipleInfo['status'] < 5 ? $discipleInfo['status']+1 : $discipleInfo['status']
+            ]);
 
-        // return Attend::find($attendInfo->id);
+            if ($discipleInfo['status'] < 5){
+                Disciple::where('id', $attendee['id'])->update([
+                    'status' => $discipleInfo['status']+1
+                ]);
+            }
+        }
+
+        return Attend::select('*')->where('attends.event_id', $request['event_id'])->get();
     }
 
     /**
@@ -98,6 +103,4 @@ class AttendController extends Controller
     {
         //
     }
-
-    // public function 
 }

@@ -56,6 +56,16 @@ export default new Vuex.Store({
         commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${payload.last_name}, ${payload.first_name} information is updated.` })
       }
     },
+    updateDiscipleStatus({commit, state},payload) {
+      let find_disciple = state.discipleList.findIndex(find => find.id == payload.id)
+      
+      if (find_disciple != -1) {
+        state.discipleList[find_disciple].status = payload.status
+      }
+
+      let find_event = state.eventList.find(find => find.id == payload.event_id)
+      commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${find_event.name} attendees is updated.` })
+    },
     updateDiscipleList({commit, state},payload) {
       let find_disciple = state.discipleList.findIndex(find => find.id == payload)
       

@@ -260,7 +260,6 @@
     </div>
 </template>
 <script>
-import { forEachOf } from 'async'
 import createEvent from './actions/Add.vue'
 import addDisciple from '../report/actions/Add.vue'
 export default {
@@ -320,37 +319,22 @@ export default {
       this.$store.dispatch('addNewAttendee', '')
     },
     updateEventAttendance(){
-      // this.formDisabled = true
+      this.formDisabled = true
       
-      forEachOf(this.attendees, (value, index, callback) => {
-        // let find_disciple = this.discipleList.find(find => find.id == value.id)
+      let data = { event_id: this.selectedEvent.id, attendees: this.attendees }
+      this.$http.post('api/attendee', data).then(response => {
+        this.$store.dispatch('clearAttendee')
+        this.attendees = []
 
-        // if (find_disciple) {
-        //   let data = { disciple_id: value.id, status: find_disciple.status < 5 ? find_disciple.status+1 : find_disciple.status, event_id: this.selectedEvent.id }
+        response.body.map(data => {
+          this.$store.dispatch('addNewAttendee', data.disciple_id)
+          if (data.status < 5){
+            this.$store.dispatch('updateDiscipleStatus', { id: data.disciple_id, status: data.status, event_id: this.selectedEvent.id })
+          }
+        })
 
-
-          this.$http.post('api/attendee', this.attendees).then(response => {
-            console.log("attendess: ", response.body)
-          })
-        //   if (find_disciple.status < 5) {
-        //     this.$http.put(`api/disciple/updateStatus/${value.id}`, find_disciple.status+1).then(res => {
-        //       this.$store.dispatch("updateDisciple", res.body)
-        //     })
-        //   }
-        // }
-
-        callback()
-      }, () => {
-        // setTimeout(() => {
-        //   this.$store.dispatch('clearAttendee')
-
-        //   this.$http.get(`api/attendee/${this.selectedEvent.id}`).then(res => {
-        //     res.body.map(data => { this.$store.dispatch('addNewAttendee', data.disciple_id) })
-
-        //     this.formDisabled = false
-        //     this.updateAttendanceDialog = false
-        //   })
-        // }, 1000)
+        this.formDisabled = false
+        this.updateAttendanceDialog = false
       })
     },
     checkTodayDisabled(){
