@@ -7,7 +7,16 @@
       <add-disciple class="mt-2" :title_text="'Register Disciple'"></add-disciple>
     </v-tabs>
 
-    <v-data-table class="mt-5" :headers="headers" :items="showTab == 1 ? discipleList : archivedDiscipleList">
+    <v-text-field
+      v-model="search"
+      label="Search ..."
+
+      outlined dense
+      style="margin-top: 20px; width: 300px; position: fixed; left: 20px;"
+
+      @click:append="search = ''"
+    ></v-text-field>
+    <v-data-table style="margin-top: 70px;" :headers="headers" :items="showTab == 1 ? discipleListReport : archivedDiscipleListReport">
       <template v-slot:item.network="{ item }">
         {{networkList.find(find => find.id == item.network).text}}
       </template>
@@ -50,6 +59,7 @@ export default {
     'delete-disciple': deleteDisciple
   },
   data: () => ({
+    search: '',
     showTab: 1,
     headers: [
       { text: 'Status', value: 'status' },
@@ -62,6 +72,18 @@ export default {
       { text: 'Primary Leader', value: 'primary_leader_id' },
       { text: 'Actions', value: 'actions', sortable: false },
     ]
-  })
+  }),
+  computed:{
+    discipleListReport(){
+      return this.$store.state.discipleList.filter(value => {
+        return value.full_name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    },
+    archivedDiscipleListReport(){
+      return this.$store.state.archivedDiscipleList.filter(value => {
+        return value.full_name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
+  }
 }
 </script>

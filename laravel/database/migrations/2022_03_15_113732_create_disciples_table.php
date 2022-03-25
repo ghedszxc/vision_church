@@ -25,7 +25,7 @@ class CreateDisciplesTable extends Migration
             $table->integer('network'); // 0: ym; 1: m; 2: yw; 3: w;
             
             $table->string('address');
-            $table->string('birthday');
+            $table->string('birthday')->nullable();
             $table->integer('age')->default(0);
             
             $table->integer('inviter_id')->default(0);

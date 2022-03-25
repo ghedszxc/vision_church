@@ -27,26 +27,29 @@
                             </v-flex>
                             <v-flex xs12 md3>
                                 <v-text-field
-                                    v-model="form.last_name"
-                                    placeholder="Surname"
-                                    label="Surname"
-                                    outlined
-                                ></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 md4 class="px-2">
-                                <v-text-field
                                     v-model="form.first_name"
                                     placeholder="Given Name"
                                     label="Given Name"
                                     outlined
+                                    @input="setTypeCapitalize('first_name', form.first_name)"
                                 ></v-text-field>
                             </v-flex>
-                            <v-flex xs12 md3 class="pr-2">
+                            <v-flex xs12 md4 class="px-2">
+                                <v-text-field
+                                    v-model="form.last_name"
+                                    placeholder="Surname"
+                                    label="Surname"
+                                    outlined
+                                    @input="setTypeCapitalize('last_name', form.last_name)"
+                                ></v-text-field>
+                            </v-flex>
+                            <!-- <v-flex xs12 md3 class="pr-2">
                                 <v-text-field
                                     v-model="form.middle_name"
                                     placeholder="Middle Name"
                                     label="Middle Name"
                                     outlined
+                                    @input="setTypeCapitalize('middle_name', form.middle_name)"
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2>
@@ -55,10 +58,11 @@
                                     placeholder="Suffix"
                                     label="Suffix"
                                     outlined
+                                    @input="setTypeCapitalize('suffix', form.suffix)"
                                 ></v-text-field>
-                            </v-flex>
+                            </v-flex> -->
                             
-                            <v-flex xs12 md3>
+                            <!-- <v-flex xs12 md3>
                                 <v-menu
                                     v-model="menu"
                                     :close-on-content-click="false"
@@ -78,13 +82,14 @@
                                     </template>
                                     <v-date-picker v-model="form.birthday" @input="menu = false"></v-date-picker>
                                 </v-menu>
-                            </v-flex>
+                            </v-flex> -->
                             <v-flex xs12 md9 class="pl-2">
                                 <v-text-field
                                     v-model="form.address"
                                     placeholder="Address"
                                     label="Address"
                                     outlined
+                                    @input="setTypeCapitalize('address', form.address)"
                                 ></v-text-field>
                             </v-flex>
                             
@@ -169,7 +174,7 @@ export default {
 
         form: {
             last_name: '', first_name: '', middle_name: '', suffix: '',
-            status: 0, network: 0,
+            status: 5, network: 0,
 
             address: '', birthday: '', age: 0,
             
@@ -177,13 +182,16 @@ export default {
         }
     }),
     methods:{
+        setTypeCapitalize(object_name, data){
+            this.form[object_name] = data.toLowerCase().replace(/\b[a-z](?=[a-z]{0})/g, function(val) { return val.toUpperCase() })
+        },
         clearForm(){
             // this.$refs.form.reset()
             this.addDiscipleDialog = false
 
             this.form = {
                 last_name: '', first_name: '', middle_name: '', suffix: '',
-                status: 0, network: 0,
+                status: 5, network: 0,
 
                 address: '', birthday: '', age: 0,
                 
