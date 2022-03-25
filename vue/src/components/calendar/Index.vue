@@ -285,7 +285,8 @@ export default {
   }),
   computed: {
     discipleListFilter(){
-      let unique_ids = [...new Set(this.attendees.concat(this.attendeeList).map(value => value.id))].filter(Number)
+      let unique_ids = [...new Set(this.attendeeList.map(value => value.id))].filter(Number)
+      // let unique_ids = [...new Set(this.attendees.concat(this.attendeeList).map(value => value.id))].filter(Number)
       return this.$store.state.discipleList.filter(find => unique_ids.findIndex(key => key == find.id) == -1)
     },
     attendeeList(){
