@@ -1,14 +1,9 @@
 <template>
     <div style="display: inline-block;">
-        <v-btn text :class="title_text == 'Register 1T' ? 'hidden-md-and-down primary mr-2' : 'hidden-md-and-down primary'" @click="addDiscipleDialog = true"
+        <v-btn text :class="title_text == 'Register 1T' ? 'primary mr-2' : 'primary'" @click="addDiscipleDialog = true"
             :disabled="checkTodayDisabled">
             <v-icon class="mr-2" size="20">mdi-plus</v-icon>
             {{title_text}}
-        </v-btn>
-
-        <v-btn icon dark class="primary hidden-md-and-up ml-4"  @click="addDiscipleDialog = true"
-            :disabled="checkTodayDisabled">
-            <v-icon>mdi-plus</v-icon>
         </v-btn>
 
         <v-dialog v-model="addDiscipleDialog" persistent max-width="1000">

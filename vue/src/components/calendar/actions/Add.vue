@@ -4,16 +4,6 @@
             <v-icon class="mr-2" size="20">mdi-plus</v-icon>
             Create Event
         </v-btn>
-        <!-- <v-btn text :class="title_text == 'Register 1T' ? 'hidden-md-and-down primary mr-2' : 'hidden-md-and-down primary'" @click="addDiscipleDialog = true"
-            :disabled="checkTodayDisabled">
-            <v-icon class="mr-2" size="20">mdi-plus</v-icon>
-            {{title_text}}
-        </v-btn>
-
-        <v-btn icon dark class="primary hidden-md-and-up ml-4"  @click="addDiscipleDialog = true"
-            :disabled="checkTodayDisabled">
-            <v-icon>mdi-plus</v-icon>
-        </v-btn> -->
 
         <v-dialog v-model="createEventDialog" persistent max-width="1000">
             <v-card>

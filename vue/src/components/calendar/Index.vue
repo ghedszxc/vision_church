@@ -4,7 +4,7 @@
         <v-card-title>
           <v-tabs v-model="showTab">
             <v-tab href="#1">Event List</v-tab>
-            <v-spacer class="hidden-md-and-down"></v-spacer>
+            <v-spacer></v-spacer>
             <create-event class="mt-2"></create-event>
           </v-tabs>
         </v-card-title>
@@ -35,7 +35,7 @@
           </v-card-title>
           <v-card-text>
             <v-layout wrap class="mt-5">
-              <v-flex xs9>
+              <v-flex xs12 md9>
                 <v-layout wrap>
                   <v-flex xs12 class="mb-5">
                     <span class="overline ml-3">Attendees</span>
@@ -132,7 +132,7 @@
                   </v-flex>
                 </v-layout>
               </v-flex>
-              <v-flex xs3>
+              <v-flex xs12 md3>
                 <v-layout wrap>
                   <v-flex xs12>
                     <span class="overline ml-3">Summary</span>
@@ -283,15 +283,15 @@ export default {
     
     attendees: [],
     headers: [
-      { text: 'Status', value: 'status' },
+      { text: 'Status', value: 'status', sortable: false },
       { text: 'Name', value: 'id', sortable: false },
 
-      { text: 'Address', value: 'address' },
-      { text: 'Network', value: 'network' },
+      { text: 'Address', value: 'address', sortable: false },
+      { text: 'Network', value: 'network', sortable: false },
 
-      { text: 'Inviter', value: 'inviter_id' },
-      { text: 'Cell Leader', value: 'cell_leader_id' },
-      { text: 'Primary Leader', value: 'primary_leader_id' }
+      { text: 'Inviter', value: 'inviter_id', sortable: false },
+      { text: 'Cell Leader', value: 'cell_leader_id', sortable: false },
+      { text: 'Primary Leader', value: 'primary_leader_id', sortable: false }
     ],
 
     updateAttendanceDialog: false
