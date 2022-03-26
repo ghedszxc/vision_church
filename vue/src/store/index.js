@@ -4,6 +4,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+  },
   state: {
     // GLOBAL
     snackBar: { snackbar: false, color: '', timeout: 3000, message: '' },
@@ -28,7 +30,7 @@ export default new Vuex.Store({
     GET_DISCIPLE_LIST: (state, payload) => {
       state.discipleList = payload
     },
-    GET_ARCHIVED_DISCIPLE_LIST: (state, payload) => {
+    GET_INACTIVE_DISCIPLE_LIST: (state, payload) => {
       state.archivedDiscipleList = payload
     },
 
@@ -50,7 +52,6 @@ export default new Vuex.Store({
     },
     updateDisciple({commit, state},payload) {
       let find_disciple = state.discipleList.findIndex(find => find.id == payload.id)
-      
       if (find_disciple != -1) {
         state.discipleList[find_disciple] = payload
         commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${payload.last_name}, ${payload.first_name} information is updated.` })
@@ -67,11 +68,15 @@ export default new Vuex.Store({
       commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${find_event.name} attendees is updated.` })
     },
     updateDiscipleList({commit, state},payload) {
-      let find_disciple = state.discipleList.findIndex(find => find.id == payload)
+      let selected_list = payload.is_archive ? state.discipleList : state.archivedDiscipleList
+      let reversed_selected_list = payload.is_archive ? state.archivedDiscipleList : state.discipleList
+      let find_disciple = selected_list.findIndex(find => find.id == payload.id)
       
       if (find_disciple != -1) {
-        commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${state.discipleList[find_disciple].last_name}, ${state.discipleList[find_disciple].first_name} is inactive.` })
-        state.discipleList.splice(find_disciple,1)
+        selected_list.splice(find_disciple,1)
+        reversed_selected_list.push(payload)
+
+        commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${selected_list[find_disciple].last_name}, ${selected_list[find_disciple].first_name} is ${payload.is_archive ? 'inactive' : 'active'}.` })
       }
     },
 
@@ -96,6 +101,4 @@ export default new Vuex.Store({
       // commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${payload.name} is created.` })
     },
   },
-  modules: {
-  }
 })

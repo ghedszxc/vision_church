@@ -8,7 +8,10 @@ import globalMixin from './mixins/global'
 
 Vue.use(vueResource)
 Vue.mixin(globalMixin)
+
 Vue.http.options.root = "http://127.0.0.1:8000"
+// Vue.http.options.root = "https://vision.kplindustrialsupply.com"
+
 Vue.config.productionTip = false
 
 new Vue({

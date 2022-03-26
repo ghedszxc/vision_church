@@ -1,20 +1,28 @@
 <template>
     <div style="display: inline-block;">
-        <v-btn text :class="title_text == 'Register 1T' ? 'primary mr-2' : 'primary'" @click="addDiscipleDialog = true"
+        <v-btn text :class="title_text == 'Register 1T' ? 'hidden-md-and-down primary mr-2' : 'hidden-md-and-down primary'" @click="addDiscipleDialog = true"
             :disabled="checkTodayDisabled">
             <v-icon class="mr-2" size="20">mdi-plus</v-icon>
             {{title_text}}
         </v-btn>
 
+        <v-btn icon dark class="primary hidden-md-and-up ml-4"  @click="addDiscipleDialog = true"
+            :disabled="checkTodayDisabled">
+            <v-icon>mdi-plus</v-icon>
+        </v-btn>
+
         <v-dialog v-model="addDiscipleDialog" persistent max-width="1000">
             <v-card>
                 <v-card-title>
-                    {{title_text}}
+                    <span v-if="!formDisabled">
+                        {{title_text}}
+                    </span>
+                    <span v-else>
+                        <v-progress-circular indeterminate color="primary" size="20" class="mr-2"></v-progress-circular>
+                        Processing your request ...
+                    </span>
                     <v-spacer></v-spacer>
-                    <v-btn text color="success" @click="addDisciple()">
-                        Add
-                    </v-btn>
-                    <v-btn text color="error" @click="clearForm()">
+                    <v-btn text color="error" @click="clearForm()" :disabled="formDisabled">
                         close
                     </v-btn>
                 </v-card-title>
@@ -27,29 +35,46 @@
                             </v-flex>
                             <v-flex xs12 md3>
                                 <v-text-field
-                                    v-model="form.first_name"
-                                    placeholder="Given Name"
-                                    label="Given Name"
-                                    outlined
-                                    @input="setTypeCapitalize('first_name', form.first_name)"
-                                ></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 md4 class="px-2">
-                                <v-text-field
                                     v-model="form.last_name"
                                     placeholder="Surname"
                                     label="Surname"
                                     outlined
                                     @input="setTypeCapitalize('last_name', form.last_name)"
+
+                                    :disabled="formDisabled"
+                                    :rules="[
+                                        field_rules.required,
+                                        field_rules.text_and_spaces_only
+                                    ]"
                                 ></v-text-field>
                             </v-flex>
-                            <!-- <v-flex xs12 md3 class="pr-2">
+                            <v-flex xs12 md4 class="px-2">
+                                <v-text-field
+                                    v-model="form.first_name"
+                                    placeholder="Given Name"
+                                    label="Given Name"
+                                    outlined
+                                    @input="setTypeCapitalize('first_name', form.first_name)"
+
+                                    :disabled="formDisabled"
+                                    :rules="[
+                                        field_rules.required,
+                                        field_rules.text_and_spaces_only
+                                    ]"
+                                ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 md3 class="pr-2">
                                 <v-text-field
                                     v-model="form.middle_name"
                                     placeholder="Middle Name"
                                     label="Middle Name"
                                     outlined
                                     @input="setTypeCapitalize('middle_name', form.middle_name)"
+                                    
+                                    :disabled="formDisabled"
+                                    :rules="[
+                                        field_rules.text_and_spaces_only
+                                    ]"
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12 md2>
@@ -59,10 +84,15 @@
                                     label="Suffix"
                                     outlined
                                     @input="setTypeCapitalize('suffix', form.suffix)"
+                                    
+                                    :disabled="formDisabled"
+                                    :rules="[
+                                        field_rules.text_and_spaces_only
+                                    ]"
                                 ></v-text-field>
-                            </v-flex> -->
+                            </v-flex>
                             
-                            <!-- <v-flex xs12 md3>
+                            <v-flex xs12 md3>
                                 <v-menu
                                     v-model="menu"
                                     :close-on-content-click="false"
@@ -76,13 +106,16 @@
                                             placeholder="Birthday"
                                             label="Birthday"
                                             outlined
+                                            
+                                            :disabled="formDisabled"
+                                            :rules="[field_rules.required]"
                                             v-bind="attrs"
                                             v-on="on"
                                         ></v-text-field>
                                     </template>
                                     <v-date-picker v-model="form.birthday" @input="menu = false"></v-date-picker>
                                 </v-menu>
-                            </v-flex> -->
+                            </v-flex>
                             <v-flex xs12 md9 class="pl-2">
                                 <v-text-field
                                     v-model="form.address"
@@ -90,6 +123,9 @@
                                     label="Address"
                                     outlined
                                     @input="setTypeCapitalize('address', form.address)"
+                                    
+                                    :disabled="formDisabled"
+                                    :rules="[field_rules.required]"
                                 ></v-text-field>
                             </v-flex>
                             
@@ -107,6 +143,8 @@
                                     :items="networkList"
                                     item-text="text"
                                     item-value="id"
+                                    
+                                    :disabled="formDisabled"
                                 ></v-select>
                             </v-flex>
                             <v-flex xs12 md3 class="px-2">
@@ -119,6 +157,8 @@
                                     :items="statusList"
                                     item-text="text"
                                     item-value="id"
+                                    
+                                    :disabled="formDisabled"
                                 ></v-select>
                             </v-flex>
                             <v-flex xs12 md3 class="pr-2" v-if="form.status">
@@ -130,8 +170,11 @@
 
                                     :items="discipleList"
                                     item-text="full_name"
-                                    item-value="id">
-                                </v-autocomplete>
+                                    item-value="id"
+                                    
+                                    :disabled="formDisabled"
+                                    :rules="[field_rules.required]"
+                                ></v-autocomplete>
                             </v-flex>
                             <v-flex xs12 md3 v-if="form.status">
                                 <v-autocomplete
@@ -142,8 +185,11 @@
 
                                     :items="discipleList"
                                     item-text="full_name"
-                                    item-value="id">
-                                </v-autocomplete>
+                                    item-value="id"
+                                    
+                                    :disabled="formDisabled"
+                                    :rules="[field_rules.required]"
+                                ></v-autocomplete>
                             </v-flex>
                             <v-flex xs12 md6 v-if="!form.status">
                                 <v-autocomplete
@@ -154,15 +200,23 @@
 
                                     :items="discipleList"
                                     item-text="full_name"
-                                    item-value="id">
-                                </v-autocomplete>
+                                    item-value="id"
+                                    
+                                    :disabled="formDisabled"
+                                    :rules="[field_rules.required]"
+                                ></v-autocomplete>
                             </v-flex>
                         </v-layout>
                     </v-form>
                 </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="success px-5 mr-2" @click="addDisciple()" :disabled="formDisabled">
+                        Submit
+                    </v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
-
     </div>
 </template>
 <script>
@@ -174,7 +228,7 @@ export default {
 
         form: {
             last_name: '', first_name: '', middle_name: '', suffix: '',
-            status: 5, network: 0,
+            status: 0, network: 0,
 
             address: '', birthday: '', age: 0,
             
@@ -183,15 +237,17 @@ export default {
     }),
     methods:{
         setTypeCapitalize(object_name, data){
-            this.form[object_name] = data.toLowerCase().replace(/\b[a-z](?=[a-z]{0})/g, function(val) { return val.toUpperCase() })
+            if (object_name && data){
+                this.form[object_name] = data.toLowerCase().replace(/\b[a-z](?=[a-z]{0})/g, function(val) { return val.toUpperCase() })
+            }
         },
         clearForm(){
-            // this.$refs.form.reset()
+            this.$refs.form.reset()
             this.addDiscipleDialog = false
 
             this.form = {
                 last_name: '', first_name: '', middle_name: '', suffix: '',
-                status: 5, network: 0,
+                status: 0, network: 0,
 
                 address: '', birthday: '', age: 0,
                 
@@ -199,18 +255,26 @@ export default {
             }
         },
         addDisciple(){
-            this.$http.post('api/disciple', this.form).then(response => {
-                this.$store.dispatch("addNewDisciple", response.body)
-                this.clearForm()
+            if (this.$refs.form.validate()) {
+                this.formDisabled = true
+                this.$http.post('api/disciple', this.form).then(response => {
+                    
+                    this.$store.dispatch("addNewDisciple", response.body)
 
-                if (this.event_id) {
-                    let data = { disciple_id: response.body.id, status: response.body.status, event_id: this.event_id }
+                    setTimeout(() => {
+                        this.formDisabled = false
+                        this.clearForm()
+                    }, 1000);
 
-                    this.$http.post('api/attendee/addFirstTimer', data).then(() => {
-                        this.$store.dispatch('addNewAttendee', data.disciple_id)
-                    })
-                }
-            })
+                    if (this.event_id) {
+                        let data = { disciple_id: response.body.id, status: response.body.status, event_id: this.event_id }
+
+                        this.$http.post('api/attendee/addFirstTimer', data).then(() => {
+                            this.$store.dispatch('addNewAttendee', data.disciple_id)
+                        })
+                    }
+                })
+            }
         }
     }
 }

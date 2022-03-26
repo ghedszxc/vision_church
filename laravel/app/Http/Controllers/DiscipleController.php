@@ -138,4 +138,18 @@ class DiscipleController extends Controller
 
         return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->find($id);
     }
+    
+    public function getInactiveDisiples($id)
+    {
+        return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->where('is_archive', $id)->orderBy('last_name', 'ASC')->get();
+    }
+    
+    public function updateIsArchive(Request $request, $id)
+    {
+        Disciple::where('id', $id)->update([
+            'is_archive' => $request['is_archive']
+        ]);
+
+        return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->find($id);
+    }
 }

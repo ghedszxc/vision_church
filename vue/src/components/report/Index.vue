@@ -3,20 +3,24 @@
     <v-tabs v-model="showTab">
       <v-tab href="#1">Active Disciples</v-tab>
       <v-tab href="#2">Inactive Disciples</v-tab>
-      <v-spacer></v-spacer>
-      <add-disciple class="mt-2" :title_text="'Register Disciple'"></add-disciple>
+      <v-spacer class="hidden-md-and-down"></v-spacer>
+      <add-disciple class="mt-2 hidden-md-and-down" :title_text="'Register Disciple'"></add-disciple>
     </v-tabs>
 
     <v-text-field
       v-model="search"
       label="Search ..."
 
-      outlined dense
-      style="margin-top: 20px; width: 300px; position: fixed; left: 20px;"
+      outlined dense class="mt-4"
+      :full-width="false" style="display: inline-block; width: 300px;"
 
       @click:append="search = ''"
     ></v-text-field>
-    <v-data-table style="margin-top: 70px;" :headers="headers" :items="showTab == 1 ? discipleListReport : archivedDiscipleListReport">
+
+    <div class="hidden-md-and-up" style="display: inline-block;">
+      <add-disciple class="mt-2" :title_text="'Register Disciple'"></add-disciple>
+    </div>
+    <v-data-table :headers="headers" :items="showTab == 1 ? discipleListReport : archivedDiscipleListReport" v-if="!tableLoad">
       <template v-slot:item.network="{ item }">
         {{networkList.find(find => find.id == item.network).text}}
       </template>
@@ -62,14 +66,14 @@ export default {
     search: '',
     showTab: 1,
     headers: [
-      { text: 'Status', value: 'status' },
+      { text: 'Status', value: 'status', sortable: false },
       { text: 'Name', value: 'full_name', sortable: false },
 
-      { text: 'Address', value: 'address' },
-      { text: 'Network', value: 'network' },
+      { text: 'Address', value: 'address', sortable: false },
+      { text: 'Network', value: 'network', sortable: false },
 
-      { text: 'Cell Leader', value: 'cell_leader_id' },
-      { text: 'Primary Leader', value: 'primary_leader_id' },
+      { text: 'Cell Leader', value: 'cell_leader_id', sortable: false },
+      { text: 'Primary Leader', value: 'primary_leader_id', sortable: false },
       { text: 'Actions', value: 'actions', sortable: false },
     ]
   }),

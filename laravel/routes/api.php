@@ -27,6 +27,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('api')->group(function () {
     Route::resource('disciple', DiscipleController::class);
     Route::put('disciple/updateStatus/{id}', [DiscipleController::class, 'updateStatus']);
+    Route::get('disciple/getInactiveDisiples/{id}', [DiscipleController::class, 'getInactiveDisiples']);
+    Route::put('disciple/updateIsArchive/{id}', [DiscipleController::class, 'updateIsArchive']);
+    
+    
     
     Route::resource('event', EventController::class);
     
