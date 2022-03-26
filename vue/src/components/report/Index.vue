@@ -1,55 +1,61 @@
 <template>
   <div>
-    <v-tabs v-model="showTab">
-      <v-tab href="#1">Active Disciples</v-tab>
-      <v-tab href="#2">Inactive Disciples</v-tab>
-      <v-spacer class="hidden-md-and-down"></v-spacer>
-      <add-disciple class="mt-2 hidden-md-and-down" :title_text="'Register Disciple'"></add-disciple>
-    </v-tabs>
+    <v-card flat>
+      <v-card-title>
+        <v-tabs v-model="showTab">
+          <v-tab href="#1">Active Disciples</v-tab>
+          <v-tab href="#2">Inactive Disciples</v-tab>
+          <v-spacer class="hidden-md-and-down"></v-spacer>
+          <add-disciple class="mt-2 hidden-md-and-down" :title_text="'Register Disciple'"></add-disciple>
+        </v-tabs>
+      </v-card-title>
 
-    <v-text-field
-      v-model="search"
-      label="Search ..."
+      <v-card-text>
+        <v-text-field
+          v-model="search"
+          label="Search ..."
 
-      outlined dense class="mt-4"
-      :full-width="false" style="display: inline-block; width: 300px;"
+          outlined dense
+          :full-width="false" style="display: inline-block; width: 300px;"
 
-      @click:append="search = ''"
-    ></v-text-field>
+          @click:append="search = ''"
+        ></v-text-field>
 
-    <div class="hidden-md-and-up" style="display: inline-block;">
-      <add-disciple class="mt-2" :title_text="'Register Disciple'"></add-disciple>
-    </div>
-    <v-data-table :headers="headers" :items="showTab == 1 ? discipleListReport : archivedDiscipleListReport" v-if="!tableLoad">
-      <template v-slot:item.network="{ item }">
-        {{networkList.find(find => find.id == item.network).text}}
-      </template>
+        <div class="hidden-md-and-up" style="display: inline-block;">
+          <add-disciple class="mt-2" :title_text="'Register Disciple'"></add-disciple>
+        </div>
+        <v-data-table :headers="headers" :items="showTab == 1 ? discipleListReport : archivedDiscipleListReport" v-if="!tableLoad">
+          <template v-slot:item.network="{ item }">
+            {{networkList.find(find => find.id == item.network).text}}
+          </template>
 
-      <template v-slot:item.status="{ item }">
-        <v-chip :color="statusList.find(find => find.id == item.status).color">
-          {{statusList.find(find => find.id == item.status).text}}
-        </v-chip>
-      </template>
+          <template v-slot:item.status="{ item }">
+            <v-chip :color="statusList.find(find => find.id == item.status).color">
+              {{statusList.find(find => find.id == item.status).text}}
+            </v-chip>
+          </template>
 
-      <template v-slot:item.cell_leader_id="{ item }">
-        {{
-          discipleList.find(find => find.id == item.cell_leader_id) ?
-          `${discipleList.find(find => find.id == item.cell_leader_id).last_name}, ${discipleList.find(find => find.id == item.cell_leader_id).first_name}` : ''
-        }}
-      </template>
-      
-      <template v-slot:item.primary_leader_id="{ item }">
-        {{
-          discipleList.find(find => find.id == item.primary_leader_id) ?
-          `${discipleList.find(find => find.id == item.primary_leader_id).last_name}, ${discipleList.find(find => find.id == item.primary_leader_id).first_name}` : ''
-        }}
-      </template>
+          <template v-slot:item.cell_leader_id="{ item }">
+            {{
+              discipleList.find(find => find.id == item.cell_leader_id) ?
+              `${discipleList.find(find => find.id == item.cell_leader_id).last_name}, ${discipleList.find(find => find.id == item.cell_leader_id).first_name}` : ''
+            }}
+          </template>
+          
+          <template v-slot:item.primary_leader_id="{ item }">
+            {{
+              discipleList.find(find => find.id == item.primary_leader_id) ?
+              `${discipleList.find(find => find.id == item.primary_leader_id).last_name}, ${discipleList.find(find => find.id == item.primary_leader_id).first_name}` : ''
+            }}
+          </template>
 
-      <template v-slot:item.actions="{ item }">
-        <edit-disciple :selectedDisciple="item"></edit-disciple>
-        <delete-disciple :selectedDisciple="item"></delete-disciple>
-      </template>
-    </v-data-table>
+          <template v-slot:item.actions="{ item }">
+            <edit-disciple :selectedDisciple="item"></edit-disciple>
+            <delete-disciple :selectedDisciple="item"></delete-disciple>
+          </template>
+        </v-data-table>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 <script>

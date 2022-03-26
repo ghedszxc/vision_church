@@ -1,19 +1,26 @@
 <template>
     <div style="display: inline-block;">
-        <v-btn rounded text class="primary" @click="createEventDialog = true">
+        <v-btn text class="primary" @click="createEventDialog = true">
             <v-icon class="mr-2" size="20">mdi-plus</v-icon>
             Create Event
         </v-btn>
+        <!-- <v-btn text :class="title_text == 'Register 1T' ? 'hidden-md-and-down primary mr-2' : 'hidden-md-and-down primary'" @click="addDiscipleDialog = true"
+            :disabled="checkTodayDisabled">
+            <v-icon class="mr-2" size="20">mdi-plus</v-icon>
+            {{title_text}}
+        </v-btn>
+
+        <v-btn icon dark class="primary hidden-md-and-up ml-4"  @click="addDiscipleDialog = true"
+            :disabled="checkTodayDisabled">
+            <v-icon>mdi-plus</v-icon>
+        </v-btn> -->
 
         <v-dialog v-model="createEventDialog" persistent max-width="1000">
             <v-card>
                 <v-card-title>
                     Create Event
                     <v-spacer></v-spacer>
-                    <v-btn text color="success" @click="addEvent()">
-                        Add
-                    </v-btn>
-                    <v-btn text color="error" @click="createEventDialog = false">
+                    <v-btn text color="error" @click="createEventDialog = false" :disabled="formDisabled">
                         close
                     </v-btn>
                 </v-card-title>
@@ -32,6 +39,9 @@
 
                                     :items="events"
                                     outlined
+
+                                    :disabled="formDisabled"
+                                    :rules="[field_rules.required]"
                                 ></v-select>
                             </v-flex>
                             <v-flex xs12 md4 class="px-2">
@@ -48,11 +58,14 @@
                                             placeholder="Starts At"
                                             label="Starts At"
                                             outlined
+
+                                            :disabled="formDisabled"
+                                            :rules="[field_rules.required]"
+
                                             v-bind="attrs"
                                             v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <!-- <v-datetime-picker v-model="form.start"></v-datetime-picker> -->
                                     <v-time-picker landscape v-model="form.start"></v-time-picker>
                                 </v-menu>
                             </v-flex>
@@ -70,6 +83,10 @@
                                             placeholder="Ends At"
                                             label="Ends At"
                                             outlined
+                                            
+                                            :disabled="formDisabled"
+                                            :rules="[field_rules.required]"
+
                                             v-bind="attrs"
                                             v-on="on"
                                         ></v-text-field>
@@ -80,9 +97,14 @@
                         </v-layout>
                     </v-form>
                 </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="success px-5 mr-2" @click="addEvent()" :disabled="formDisabled">
+                        Submit
+                    </v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
-
     </div>
 </template>
 <script>
@@ -119,10 +141,14 @@ export default {
                 color: `#${Math.floor(Math.random()*16777215).toString(16)}`
             }
             
-            this.$http.post('api/event', data).then(response => {
-                this.$store.dispatch('addNewEvent', response.body)
-                this.createEventDialog = false
-            })
+            this.formDisabled = true
+            if (this.$refs.form.validate()) {
+                this.$http.post('api/event', data).then(response => {
+                    this.$store.dispatch('addNewEvent', response.body)
+                    this.createEventDialog = false
+                    this.formDisabled = false
+                })
+            }
         }
     }
 }

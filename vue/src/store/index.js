@@ -96,7 +96,6 @@ export default new Vuex.Store({
     },
     addNewAttendee({state}, payload) {
       state.attendeeList.push({ id: payload })
-
       // state.eventList.push(payload)
       // commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${payload.name} is created.` })
     },

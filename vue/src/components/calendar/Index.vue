@@ -1,14 +1,25 @@
 <template>
     <div>
-      <create-event></create-event>
-      <v-calendar
-        type="month"
-        :weekdays="weekday"
-        event-overlap-mode="stack"
+      <v-card flat>
+        <v-card-title>
+          <v-tabs v-model="showTab">
+            <v-tab href="#1">Event List</v-tab>
+            <v-spacer class="hidden-md-and-down"></v-spacer>
+            <create-event class="mt-2"></create-event>
+          </v-tabs>
+        </v-card-title>
         
-        :events="eventList"
-        @click:event="showEvent"
-      ></v-calendar>
+        <v-card-text>
+          <v-calendar
+            type="month"
+            :weekdays="weekday"
+            event-overlap-mode="stack"
+            
+            :events="eventList"
+            @click:event="showEvent"
+          ></v-calendar>
+        </v-card-text>
+      </v-card>
 
 
       <v-dialog v-model="eventInfoDialog" max-width="1500">
@@ -262,6 +273,8 @@ export default {
     'add-disciple': addDisciple
   },
   data: () => ({
+    showTab: 1,
+
     selectedEvent: {},
     eventInfoDialog: false,
     weekday: [0, 1, 2, 3, 4, 5, 6],
