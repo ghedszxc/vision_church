@@ -255,7 +255,14 @@ export default {
     methods:{
         setTypeCapitalize(object_name, data){
             if (object_name && data){
-                this.form[object_name] = data.toLowerCase().replace(/\b[a-z](?=[a-z]{0})/g, function(val) { return val.toUpperCase() })
+                let separateWord = data.toLowerCase().split(' ')
+
+                for (let i = 0; i < separateWord.length; i++) {
+                    separateWord[i] = separateWord[i].charAt(0).toUpperCase() + separateWord[i].substring(1)
+                }
+
+                this.form[object_name] =separateWord.join(' ')
+                // this.form[object_name] = data.toLowerCase().replace(/\b[a-zÑñ](?=[a-zÑñ]{0})/g, function(val) { return val.toUpperCase() })
             }
         },
         hideEditDiscipleDialog(){

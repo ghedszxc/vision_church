@@ -26,7 +26,7 @@ export default {
             required: value => !!value || 'This field is required.',
 
             text_and_spaces_only: value => {
-                const pattern = /^[a-zA-Z ]*$/
+                const pattern = /^[Ñña-zA-Z ]*$/
                 return pattern.test(value) || 'Invalid characters.'
             },
             email: value => {
