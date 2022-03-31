@@ -1,5 +1,5 @@
 <template>
-    <div style="display: inline-block;">
+    <div>
         <v-btn text :class="title_text == 'Register 1T' ? 'primary mr-2' : 'primary'" @click="addDiscipleDialog = true"
             :disabled="checkTodayDisabled">
             <v-icon class="mr-2" size="20">mdi-plus</v-icon>

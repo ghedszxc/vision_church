@@ -23,7 +23,7 @@
 
 
       <v-dialog v-model="eventInfoDialog" max-width="1500">
-        <v-card>
+        <v-card v-if="loadingPage">
           <v-card-title :style="{ color: selectedEvent.color }">
             {{selectedEvent.name}}
             <v-spacer></v-spacer>
@@ -234,6 +234,12 @@
             </v-layout>
           </v-card-text>
         </v-card>
+        <v-card v-else>
+          <v-card-text class="text-center" style="padding: 5% 20% 5% 20%;">
+            <div class="mb-4 overline">Loading data <br class="hidden-md-and-up"> please wait ...</div>
+            <v-progress-linear indeterminate size="64" height="10"></v-progress-linear>
+          </v-card-text>
+        </v-card>
       </v-dialog>
       
       <v-dialog v-model="updateAttendanceDialog" persistent max-width="500">
@@ -247,7 +253,7 @@
               Are you sure you want to update attendees of {{selectedEvent ? selectedEvent.name : ''}}?
             </span>
             <div v-else class="text-center">
-              <div class="mb-4">Processing please wait ...</div>
+              <div class="mb-4 overline">Processing please wait ...</div>
               <v-progress-linear indeterminate size="64" height="5"></v-progress-linear>
             </div>
           </v-card-text>
@@ -274,6 +280,7 @@ export default {
   },
   data: () => ({
     showTab: 1,
+    loadingPage: false,
 
     selectedEvent: {},
     eventInfoDialog: false,
@@ -314,10 +321,16 @@ export default {
       this.$http.get(`api/attendee/${event.id}`).then(res => {
         this.selectedEvent = event
         this.eventInfoDialog = true
+        this.loadingPage = false
 
-        res.body.map(data => { this.$store.dispatch('addNewAttendee', data.disciple_id) })
+        let clearDisciple = setInterval(() => {
+          if (this.discipleList.length) {
+            this.loadingPage = true
+            clearInterval(clearDisciple)
+            res.body.map(data => { this.$store.dispatch('addNewAttendee', data.disciple_id) })
+          }
+        }, 1000);
       })
-      
     },
     insertDiscipleId(id){
       let find_index = this.attendees.findIndex(find => find == id)

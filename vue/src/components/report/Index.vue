@@ -5,25 +5,28 @@
         <v-tabs v-model="showTab">
           <v-tab href="#1">Active Disciples</v-tab>
           <v-tab href="#2">Inactive Disciples</v-tab>
-          <v-spacer class="hidden-md-and-down"></v-spacer>
-          <add-disciple class="mt-2 hidden-md-and-down" :title_text="'Register Disciple'"></add-disciple>
+          <v-spacer class="hidden-sm-and-down"></v-spacer>
+          <add-disciple class="mt-2 hidden-sm-and-down" :title_text="'Register Disciple'"></add-disciple>
         </v-tabs>
       </v-card-title>
 
       <v-card-text>
-        <v-text-field
-          v-model="search"
-          label="Search ..."
+        <v-layout wrap>
+          <v-flex xs12 md9>
+            <v-text-field
+              v-model="search"
+              label="Search ..."
 
-          outlined dense
-          :full-width="false" style="display: inline-block; width: 300px;"
+              outlined dense
+              :full-width="false" style="display: inline-block; width: 300px;"
 
-          @click:append="search = ''"
-        ></v-text-field>
-
-        <div class="hidden-md-and-up" style="display: inline-block;">
-          <add-disciple class="mt-2" :title_text="'Register Disciple'"></add-disciple>
-        </div>
+              @click:append="search = ''"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs12 md3 class="hidden-md-and-up">
+            <add-disciple :title_text="'Register Disciple'"></add-disciple>
+          </v-flex>
+        </v-layout>
         <v-data-table :headers="headers" :items="showTab == 1 ? discipleListReport : archivedDiscipleListReport" v-if="!tableLoad">
           <template v-slot:item.network="{ item }">
             {{networkList.find(find => find.id == item.network).text}}

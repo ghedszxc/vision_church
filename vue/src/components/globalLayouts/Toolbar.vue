@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-app-bar app >
+        <v-app-bar app class="primary">
             <v-spacer></v-spacer>
             <v-btn icon :class="$route.path == '/dashboard' ? 'primary' : ''" @click="$router.push('/dashboard')">
                 <v-icon :color="$route.path == '/dashboard' ? 'white' : ''">mdi-view-dashboard</v-icon>
