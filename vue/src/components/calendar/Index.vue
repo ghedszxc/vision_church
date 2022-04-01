@@ -352,6 +352,10 @@ export default {
       return this.$store.state.attendeeList;
     }
   },
+  mounted(){
+    this.$http.get('api/event').then(res => { this.$store.commit('GET_EVENT_LIST', res.body) }) // GET ALL EVENTS
+    this.$http.get('api/disciple').then(res => { this.$store.commit('GET_DISCIPLE_LIST', res.body) }) // GET ALL DISCIPLES
+  },
   methods: {
     showEvent({ event }){
       this.$store.dispatch('clearAttendee')

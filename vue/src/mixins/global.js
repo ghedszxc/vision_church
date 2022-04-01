@@ -1,5 +1,6 @@
 export default {
     data:() => ({
+        windowSize: { height: 0, width: 0 },
         formDisabled: false,
         
         statusList: [
@@ -12,10 +13,10 @@ export default {
         ],
 
         networkList: [
-            { id: 0, text: 'YM' },
-            { id: 1, text: 'M' },
-            { id: 2, text: 'YW' },
-            { id: 3, text: 'W' }
+            { id: 0, text: 'YM', color: 'primary' },
+            { id: 1, text: 'M', color: 'primary' },
+            { id: 2, text: 'YW', color: 'pink' },
+            { id: 3, text: 'W', color: 'pink' }
         ],
 
         positionList: [
@@ -62,6 +63,9 @@ export default {
         }
     },
     methods:{
+        onGlobalResize(){
+            this.windowSize = { height: window.innerHeight, width: window.innerWidth }
+        },
         getTimestamp() {
             let date = new Date();
             let mm = (date.getMonth() + 1).toString().padStart(2, 0);

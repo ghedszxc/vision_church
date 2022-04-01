@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 use App\Models\Disciple;
 use App\Http\Requests\StoreDiscipleRequest;
@@ -151,5 +152,14 @@ class DiscipleController extends Controller
         ]);
 
         return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->find($id);
+    }
+
+    public function getBirthdayCelebantThisWeek($id)
+    {
+        return DB::select("SELECT CONCAT(disciples.last_name,', ',disciples.first_name) as full_name,  DATE_FORMAT(birthday, '%M %d, %Y') as birthday, last_name, first_name, network FROM disciples
+        WHERE DATE(birthday + INTERVAL (YEAR(NOW()) - YEAR(birthday)) YEAR)
+        BETWEEN DATE(NOW() - INTERVAL WEEKDAY(NOW()) DAY)
+        AND
+        DATE(NOW() + INTERVAL 6 - WEEKDAY(NOW()) DAY)");
     }
 }

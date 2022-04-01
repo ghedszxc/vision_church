@@ -29,6 +29,7 @@ Route::middleware('api')->group(function () {
     Route::put('disciple/updateStatus/{id}', [DiscipleController::class, 'updateStatus']);
     Route::get('disciple/getInactiveDisiples/{id}', [DiscipleController::class, 'getInactiveDisiples']);
     Route::put('disciple/updateIsArchive/{id}', [DiscipleController::class, 'updateIsArchive']);
+    Route::get('disciple/getBirthdayCelebantThisWeek/{id}', [DiscipleController::class, 'getBirthdayCelebantThisWeek']);
     
     
     

@@ -97,6 +97,10 @@ export default {
         return value.full_name.toLowerCase().includes(this.search.toLowerCase())
       })
     }
+  },
+  mounted(){
+    this.$http.get('api/disciple').then(res => { this.$store.commit('GET_DISCIPLE_LIST', res.body) }) // GET ALL DISCIPLES
+    this.$http.get('api/disciple/getInactiveDisiples/1').then(res => { this.$store.commit('GET_INACTIVE_DISCIPLE_LIST', res.body) }) // GET ALL INACTIVE DISCIPLES
   }
 }
 </script>
