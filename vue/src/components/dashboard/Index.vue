@@ -4,11 +4,11 @@
             DASHBOARD
         </div>
         <v-layout wrap>
-            <v-flex xs12 md4>
+            <v-flex xs12 md3>
                 <v-card class="mt-4">
                     <v-card-text>
-                        <v-subheader class="title black--text">Birthday Celebrant This Week</v-subheader>
-                        <v-list class="pr-4 my-2" :style="{ height: `${windowSize.height/5}px`, overflowY: 'auto', overflowX: 'hidden' }">
+                        <v-subheader class="title black--text text-truncate">Birthday Celebrant This Week</v-subheader>
+                        <v-list class="pr-4 my-2" :style="{ height: `${windowSize.height/5}px`, overflowY: 'auto', overflowX: 'hidden' }" v-if="birthdayCelebrants.length">
                             <template v-for="data in birthdayCelebrants">
                                 <!-- <v-divider :key="`div-${data.full_name}`" inset></v-divider> -->
                                 <v-list-item :key="data.full_name">
@@ -27,9 +27,15 @@
                                 <v-divider :key="`div-${data.full_name}`" inset></v-divider>
                             </template>
                         </v-list>
+                        <div v-else class="overline text-center py-2">
+                            <v-divider></v-divider>
+                            <div class="mt-4">
+                                No birthday celebrant this week
+                            </div>
+                        </div>
                     </v-card-text>
-                    <v-divider></v-divider>
-                    <v-card-actions class="overline ml-2">
+                    <v-divider v-if="birthdayCelebrants.length"></v-divider>
+                    <v-card-actions class="overline ml-2" v-if="birthdayCelebrants.length">
                         Total Celebrants: <v-chip class="ml-2" color="primary">{{birthdayCelebrants.length}}</v-chip>
                     </v-card-actions>
                 </v-card>
