@@ -95,7 +95,8 @@ export default new Vuex.Store({
       find_index != -1 ? state.attendeeList.splice(find_index, 1) : null
     },
     addNewAttendee({state}, payload) {
-      state.attendeeList.push({ id: payload })
+      state.attendeeList.splice(0,0, { id: payload })
+      // state.attendeeList.push({ id: payload })
       // state.eventList.push(payload)
       // commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `${payload.name} is created.` })
     },

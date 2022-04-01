@@ -10,7 +10,7 @@
                 <v-card-title>
                     Create Event
                     <v-spacer></v-spacer>
-                    <v-btn text color="error" @click="createEventDialog = false" :disabled="formDisabled">
+                    <v-btn text color="error" @click="hideDialog()" :disabled="formDisabled">
                         close
                     </v-btn>
                 </v-card-title>
@@ -118,6 +118,16 @@ export default {
         }
     }),
     methods:{
+        hideDialog(){
+            this.createEventDialog = false
+            this.formDisabled = false
+            this.$refs.form.reset()
+            this.form = {
+                name: '',
+                start: '',
+                end: ''
+            }
+        },
         addEvent(){
             let date = new Date();
             let mm = (date.getMonth() + 1).toString().padStart(2, 0);
@@ -135,8 +145,7 @@ export default {
             if (this.$refs.form.validate()) {
                 this.$http.post('api/event', data).then(response => {
                     this.$store.dispatch('addNewEvent', response.body)
-                    this.createEventDialog = false
-                    this.formDisabled = false
+                    this.hideDialog()
                 })
             }
         }

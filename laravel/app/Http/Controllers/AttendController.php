@@ -57,6 +57,7 @@ class AttendController extends Controller
         }
 
         return Attend::select('*')->where('attends.event_id', $request['event_id'])->get();
+        // return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->where('is_archive', 0)->orderBy('last_name', 'ASC')->get();
     }
 
     /**

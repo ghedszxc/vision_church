@@ -3,14 +3,35 @@
       <v-card flat>
         <v-card-title>
           <v-tabs v-model="showTab">
-            <v-tab href="#1">Event List</v-tab>
+            <v-tab href="#1">
+              Event for {{!calendarMonth ? months[getTimestamp().split("-")[1]] : months[calendarMonth.split("-")[1]]}}
+            </v-tab>
             <v-spacer></v-spacer>
-            <create-event class="mt-2"></create-event>
+            <create-event class="mt-2 hidden-sm-and-down"></create-event>
           </v-tabs>
         </v-card-title>
+
+        <v-layout>
+          <v-flex xs12 md9>
+            <v-btn icon class="primary mx-4"
+              @click="$refs.calendar.prev()">
+              <v-icon color="white">mdi-chevron-left</v-icon>
+            </v-btn>
+            
+            <v-btn icon class="primary"
+              @click="$refs.calendar.next()">
+              <v-icon color="white">mdi-chevron-right</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-flex xs12 md3 class="hidden-md-and-up mr-4">
+            <create-event></create-event>
+          </v-flex>
+        </v-layout>
         
         <v-card-text>
           <v-calendar
+            v-model="calendarMonth"
+            ref="calendar"
             type="month"
             :weekdays="weekday"
             event-overlap-mode="stack"
@@ -279,6 +300,8 @@ export default {
     'add-disciple': addDisciple
   },
   data: () => ({
+    calendarMonth: '',
+
     showTab: 1,
     loadingPage: false,
 
@@ -286,6 +309,22 @@ export default {
     eventInfoDialog: false,
     weekday: [0, 1, 2, 3, 4, 5, 6],
     names: ['Sundary 1st Service', 'Sundary 2nd Service', 'Evening Prayer', 'Extreme Net'],
+
+
+    months: {
+      '01': 'January',
+      '02': 'February',
+      '03': 'March',
+      '04': 'April',
+      '05': 'May',
+      '06': 'June',
+      '07': 'July',
+      '08': 'August',
+      '09': 'September',
+      '10': 'October',
+      '11': 'November',
+      '12': 'December'
+    },
 
     
     attendees: [],
@@ -356,6 +395,7 @@ export default {
 
         this.formDisabled = false
         this.updateAttendanceDialog = false
+        this.$store.commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `Attendees for ${this.selectedEvent.name} is updated.` })
       })
     },
     checkTodayDisabled(){
