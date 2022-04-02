@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DiscipleController;
 use App\Http\Controllers\AttendController;
 use App\Http\Controllers\EventController;
@@ -22,20 +23,28 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// // Authenticated APIs
+Route::group(["middleware" =>'auth:sanctum'], function() {
+    // Route::get('disciple/sampleRoute/{id}', [DiscipleController::class, 'sampleRoute']);
+});
 
-// Route::group(["middleware" =>'auth:api'], function() { });
+
+Route::post('auth/authLogin', [AuthController::class, 'authLogin']);
+
 Route::middleware('api')->group(function () {
+    Route::resource('auth', AuthController::class);
+
+    // DISCIPLE
     Route::resource('disciple', DiscipleController::class);
     Route::put('disciple/updateStatus/{id}', [DiscipleController::class, 'updateStatus']);
-    Route::get('disciple/getInactiveDisiples/{id}', [DiscipleController::class, 'getInactiveDisiples']);
     Route::put('disciple/updateIsArchive/{id}', [DiscipleController::class, 'updateIsArchive']);
+    Route::get('disciple/getInactiveDisiples/{id}', [DiscipleController::class, 'getInactiveDisiples']);
     Route::get('disciple/getBirthdayCelebantThisWeek/{id}', [DiscipleController::class, 'getBirthdayCelebantThisWeek']);
     
-    
-    
+    // EVENT
     Route::resource('event', EventController::class);
     
+    // ATTENDEE
     Route::resource('attendee', AttendController::class);
     Route::post('attendee/addFirstTimer', [AttendController::class, 'addFirstTimer']);
-
 });

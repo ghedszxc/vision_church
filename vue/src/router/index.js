@@ -5,15 +5,22 @@ import Index from '@/components/globalLayouts/Index.vue'
 import Dashboard from '@/components/dashboard/Index.vue'
 import Calendar from '@/components/calendar/Index.vue'
 import Report from '@/components/report/Index.vue'
+import PageNotFound from '@/components/globalLayouts/PageNotFound.vue'
 Vue.use(VueRouter)
 const routes = [
   {
     path: '/login',
-    component: Login
+    component: Login,
+    meta: {
+      forVisitors: true
+    }
   },
   {
     path: '/',
     component: Index,
+    meta: {
+      forAuth: true
+    },
     children: [
       {
         path: '/dashboard',
@@ -28,7 +35,8 @@ const routes = [
         component: Report,
       },
     ]
-  }
+  },
+  { path: "*", component: PageNotFound }
 ]
 
 const router = new VueRouter({

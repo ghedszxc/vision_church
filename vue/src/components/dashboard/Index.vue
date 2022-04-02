@@ -2,6 +2,9 @@
     <div v-resize="onGlobalResize">
         <div class="text-h4 font-weight-bold">
             DASHBOARD
+            <v-btn @click="addUser()">
+                Add
+            </v-btn>
         </div>
         <v-layout wrap>
             <v-flex xs12 md3>
@@ -52,6 +55,13 @@ export default {
         this.$http.get('api/disciple/getBirthdayCelebantThisWeek/1').then(response => {
             this.birthdayCelebrants = response.body
         })
+    },
+    methods:{
+        addUser(){
+            this.$http.post('api/auth', { name: 'z', username: 'z', password: 'z'}).then(response => {
+                console.log("?", response.body)
+            })
+        }
     }
 }
 </script>

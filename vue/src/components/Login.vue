@@ -29,7 +29,7 @@
                             ></v-text-field>
                         </v-flex>
                         <v-flex xs12>
-                            <v-btn block class="primary py-6" @click="$router.push('/dashboard')">
+                            <v-btn block class="primary py-6" @click="login()">
                                 Login
                             </v-btn>
                         </v-flex>
@@ -45,7 +45,28 @@ export default {
         username: '',
         password: '',
         show_passowrd: true
-    })
+    }),
+    methods:{
+        login(){
+            this.$http.post('api/auth/authLogin', { username: this.username, password: this.password }).then(res => {
+                
+                if (typeof res.body == 'object') {
+                    // let today = new Date()
+                    // today.setTime(today.getTime() + (7*24*60*60*1000))
+
+                    // this.$auth.setToken(res.body[0].token, today.getTime());
+
+                    // localStorage.setItem('token', res.body[0].token)
+                    // sessionStorage.setItem('token', res.body[0].token)
+                    // this.$router.push('/dashboard')
+                    
+                } else {
+                    console.log("ELSE")
+                    this.$store.commit('UPDATE_SNACKBAR', { snackbar: true, color: 'error', message: `${res.body}` })
+                }
+            })
+        }
+    }
 }
 </script>
 <style scoped>

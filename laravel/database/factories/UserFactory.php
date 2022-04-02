@@ -14,12 +14,15 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        return [
+        $user = [
             'name' => $this->faker->name(),
             'username' => $this->faker->unique()->userName(),
-            'password' => 'superadmin', // password
-            'remember_token' => Str::random(10),
+            'password' => bcrypt('superadmin')
         ];
+
+        // $user->createToken($user['username'])->plainTextToken;
+        return $user;
+        // $user->createToken($user['username'])->plainTextToken;
     }
 
     /**
