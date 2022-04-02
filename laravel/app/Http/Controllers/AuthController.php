@@ -102,13 +102,25 @@ class AuthController extends Controller
         //
     }
 
+    public function getAuthuser($id)
+    {
+        $getToken = DB::select("SELECT name FROM personal_access_tokens WHERE token = '$id'");
+        return User::where('username', $getToken[0]->name)->first();
+    }
+
     public function authLogin(Request $request)
     {
         $user = User::where('username', $request['username'])->first();
         if ($user && Hash::check($request['password'], $user['password'])){
             $getToken = DB::select("SELECT token FROM personal_access_tokens WHERE name = '$request->username'");
+            !$getToken ? $user->createToken($request->username)->plainTextToken : null;
+
+            $response = [
+                'user' => $user,
+                'token' => $getToken[0]->token
+            ];
             
-            return $getToken ? $getToken : $user->createToken($request->username)->plainTextToken;
+            return response($response, 201);
         } else {
             return 'Incorrect credentials';
         }

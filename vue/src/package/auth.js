@@ -2,12 +2,15 @@ import store from '../store/index'
 import router from '../router/index'
 export default function(Vue) {
   Vue.auth = {
-    setToken(token, expiration) {
-      localStorage.setItem("token", token);
+    setToken(auth, expiration) {
+      localStorage.setItem("token", auth.token);
+      // localStorage.setItem('storedData', auth.user);
       localStorage.setItem("expiration", expiration);
       
-      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("token", auth.token);
+      // sessionStorage.setItem('storedData', auth.user);
       sessionStorage.setItem("expiration", expiration);
+      
     },
 
     getToken() {

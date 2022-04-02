@@ -4,7 +4,7 @@ import Login from '@/components/Login.vue'
 import Index from '@/components/globalLayouts/Index.vue'
 import Dashboard from '@/components/dashboard/Index.vue'
 import Calendar from '@/components/calendar/Index.vue'
-import Report from '@/components/report/Index.vue'
+import Disciple from '@/components/report/Index.vue'
 import PageNotFound from '@/components/globalLayouts/PageNotFound.vue'
 Vue.use(VueRouter)
 const routes = [
@@ -23,7 +23,7 @@ const routes = [
     },
     children: [
       {
-        path: '/dashboard',
+        path: '/',
         component: Dashboard,
       },
       {
@@ -31,8 +31,8 @@ const routes = [
         component: Calendar,
       },
       {
-        path: '/report',
-        component: Report,
+        path: '/disciple',
+        component: Disciple,
       },
     ]
   },

@@ -8,6 +8,7 @@ export default new Vuex.Store({
   },
   state: {
     // GLOBAL
+    authUser: {},
     // token: () => {
     //   console.log("call token");
     //   let token = localStorage.getItem('token') || sessionStorage.getItem('token') || ''
@@ -32,6 +33,9 @@ export default new Vuex.Store({
   },
   mutations: {
     // GLOBAL
+    GET_AUTH_USER: (state, payload) => {
+      state.authUser = payload
+    },
     UPDATE_SNACKBAR: (state, payload) => {
       state.snackBar = payload
     },

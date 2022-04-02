@@ -23,16 +23,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// // Authenticated APIs
-Route::group(["middleware" =>'auth:sanctum'], function() {
-    // Route::get('disciple/sampleRoute/{id}', [DiscipleController::class, 'sampleRoute']);
-});
+// // // Authenticated APIs
+// Route::group(["middleware" =>'auth:sanctum'], function() {
+//     // Route::resource('disciple', DiscipleController::class);
+//     // // Route::get('disciple/sampleRoute/{id}', [DiscipleController::class, 'sampleRoute']);
+// });
 
 
 Route::post('auth/authLogin', [AuthController::class, 'authLogin']);
 
 Route::middleware('api')->group(function () {
     Route::resource('auth', AuthController::class);
+    Route::get('auth/getAuthuser/{id}', [AuthController::class, 'getAuthuser']);
+    
 
     // DISCIPLE
     Route::resource('disciple', DiscipleController::class);

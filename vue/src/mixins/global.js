@@ -45,6 +45,9 @@ export default {
         }
     }),
     computed: {
+        authUser(){
+            return this.$store.state.authUser
+        },
         snackBar(){
             return this.$store.state.snackBar
         },
