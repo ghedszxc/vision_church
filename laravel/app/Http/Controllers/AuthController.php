@@ -117,7 +117,7 @@ class AuthController extends Controller
 
             $response = [
                 'user' => $user,
-                'token' => $getToken[0]->token
+                'token' => $getToken ? $getToken[0]->token : $user->createToken($request->username)->plainTextToken
             ];
             
             return response($response, 201);

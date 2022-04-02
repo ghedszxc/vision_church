@@ -14,15 +14,11 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $user = [
-            'name' => $this->faker->name(),
-            'username' => $this->faker->unique()->userName(),
-            'password' => bcrypt('superadmin')
+        return [
+            'name' => 'Admin',
+            'username' => 'vision.admin',
+            'password' => bcrypt('visionqhi2007')
         ];
-
-        // $user->createToken($user['username'])->plainTextToken;
-        return $user;
-        // $user->createToken($user['username'])->plainTextToken;
     }
 
     /**
