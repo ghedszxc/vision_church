@@ -9,16 +9,6 @@ export default new Vuex.Store({
   state: {
     // GLOBAL
     authUser: {},
-    // token: () => {
-    //   console.log("call token");
-    //   let token = localStorage.getItem('token') || sessionStorage.getItem('token') || ''
-    //   if (token) {
-    //     let expiry = parseInt(localStorage.getItem('expiry') || sessionStorage.getItem('expiry'))
-    //     if (new Date().getTime() > expiry) { return '' }
-    //     else { return token }
-    //   } else { return '' }
-    // },
-
     snackBar: { snackbar: false, color: '', timeout: 3000, message: '' },
 
     // DISCIPLES

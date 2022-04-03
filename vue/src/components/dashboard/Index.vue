@@ -4,8 +4,18 @@
             DASHBOARD
         </div>
         <v-layout wrap>
+            <v-flex xs12 md9>
+                <v-card class="mt-4" style="width: 99%;">
+                    <v-card-text>
+                        <v-subheader class="title black--text text-truncate">Monthly Reports</v-subheader>
+                        <div>
+                            {{monthlyReport}}
+                        </div>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
             <v-flex xs12 md3>
-                <v-card class="mt-4">
+                <v-card class="mt-4" style="width: 99%;">
                     <v-card-text>
                         <v-subheader class="title black--text text-truncate">Birthday Celebrant This Week</v-subheader>
                         <v-list class="pr-4 my-2" :style="{ height: `${windowSize.height/5}px`, overflowY: 'auto', overflowX: 'hidden' }" v-if="birthdayCelebrants.length">
@@ -47,11 +57,12 @@
 export default {
     data:() => ({
         birthdayCelebrants: [],
+        monthlyReport: []
     }),
     mounted(){
-        this.$http.get('api/disciple/getBirthdayCelebantThisWeek/1').then(response => {
-            this.birthdayCelebrants = response.body
-        })
+        this.$http.get('api/disciple/getBirthdayCelebantThisWeek/1').then(res => { this.birthdayCelebrants = res.body }) // BIRTHDAY CELEBRANT
+            this.$http.get('api/attendee/monthlyReport/1').then(res => { this.monthlyReport = res.body }) // MONTHLY REPORTING
+
     },
     methods:{
         addUser(){

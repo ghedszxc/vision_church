@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 use App\Models\Attend;
 use App\Models\Disciple;
@@ -115,5 +116,12 @@ class AttendController extends Controller
             'event_id' => $request['event_id'],
             'status' => $request['status']
         ]);
+    }
+
+    public function monthlyReport($id)
+    {
+        $firstDay = Carbon::now()->firstOfMonth()->format('Y-m-d');
+        $lastDay = Carbon::now()->lastOfMonth()->format('Y-m-d');
+        return Attend::select('status', DB::raw('count(*) as total'))->groupBy('status')->whereBetween('created_at', [$firstDay, $lastDay])->get();
     }
 }

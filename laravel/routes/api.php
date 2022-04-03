@@ -50,4 +50,5 @@ Route::middleware('api')->group(function () {
     // ATTENDEE
     Route::resource('attendee', AttendController::class);
     Route::post('attendee/addFirstTimer', [AttendController::class, 'addFirstTimer']);
+    Route::get('attendee/monthlyReport/{id}', [AttendController::class, 'monthlyReport']);
 });
