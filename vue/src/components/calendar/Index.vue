@@ -109,11 +109,6 @@
                           </span>
                       </template>
 
-                      <template v-slot:item.address="{ item }">
-                        <span class="text-truncate">
-                          {{discipleList.find(find => find.id == item.id) ? discipleList.find(find => find.id == item.id).address : ''}}
-                        </span>
-                      </template>
 
                       <template v-slot:item.network="{ item }">
                         {{
@@ -127,6 +122,15 @@
                           {{
                             item.id && discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).cell_leader_id) ?
                             `${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).cell_leader_id).last_name}, ${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).cell_leader_id).first_name}` : ''
+                          }}
+                        </span>
+                      </template>
+                      
+                      <template v-slot:item.primary_leader_id="{ item }">
+                        <span class="text-truncate">
+                          {{
+                            item.id && discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).primary_leader_id) ?
+                            `${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).primary_leader_id).last_name}, ${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).primary_leader_id).first_name}` : ''
                           }}
                         </span>
                       </template>
@@ -313,11 +317,10 @@ export default {
     headers: [
       { text: 'Status', value: 'status', sortable: false },
       { text: 'Name', value: 'id', sortable: false },
-
-      { text: 'Address', value: 'address', sortable: false },
       { text: 'Network', value: 'network', sortable: false },
 
       { text: 'Cell Leader', value: 'cell_leader_id', sortable: false },
+      { text: 'Primary Leader', value: 'primary_leader_id', sortable: false }
     ],
 
     updateAttendanceDialog: false

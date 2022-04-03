@@ -135,11 +135,13 @@ export default {
             let dd = date.getDate().toString().padStart(2, 0);
 
             let data = {
+                creator_id: this.authUser.id,
                 name: this.form.name,
                 start: `${year}-${mm}-${dd} ${this.form.start}`,
                 end: `${year}-${mm}-${dd} ${this.form.end}`,
                 color: `#${Math.floor(Math.random()*16777215).toString(16)}`
             }
+
             
             this.formDisabled = true
             if (this.$refs.form.validate()) {

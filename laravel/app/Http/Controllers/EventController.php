@@ -44,7 +44,7 @@ class EventController extends Controller
             'end' => $request['end'],
             'color' => $request['color'],
 
-            'creator_id' => 1,
+            'creator_id' => $request['creator_id'],
             'timed' => 0
         ]);
         return Event::find($eventInfo->id);

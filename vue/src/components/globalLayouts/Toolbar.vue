@@ -49,6 +49,14 @@
                     </v-list-item>
                     <v-divider inset class="hidden-md-and-up mr-3"></v-divider>
 
+                    <!-- <v-list-item @click="$router.push('/user')">
+                        <v-list-item-avatar>
+                            <v-icon :color="$route.path == '/user' ? 'primary' : ''">mdi-account-group</v-icon>
+                        </v-list-item-avatar>
+                        <v-list-item-title>User Management</v-list-item-title>
+                    </v-list-item>
+                    <v-divider inset class="hidden-md-and-up mr-3"></v-divider> -->
+
                     <v-list-item @click="logOutUser()">
                         <v-list-item-avatar>
                             <v-icon>mdi-exit-to-app</v-icon>

@@ -53,7 +53,7 @@
           </template>
 
           <template v-slot:item.actions="{ item }">
-            <edit-disciple :selectedDisciple="item"></edit-disciple>
+            <edit-disciple :selectedDisciple="item" v-if="showTab == 1"></edit-disciple>
             <delete-disciple :selectedDisciple="item"></delete-disciple>
           </template>
         </v-data-table>
