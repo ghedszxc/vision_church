@@ -39,7 +39,7 @@ export default {
     data:() => ({
         username: '',
         password: '',
-        show_passowrd: true
+        show_passowrd: false
     }),
     methods:{
         login(){

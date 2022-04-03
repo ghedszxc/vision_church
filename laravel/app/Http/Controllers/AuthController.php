@@ -113,7 +113,6 @@ class AuthController extends Controller
         $user = User::where('username', $request['username'])->first();
         if ($user && Hash::check($request['password'], $user['password'])){
             $getToken = DB::select("SELECT token FROM personal_access_tokens WHERE name = '$request->username'");
-            !$getToken ? $user->createToken($request->username)->plainTextToken : null;
 
             $response = [
                 'user' => $user,

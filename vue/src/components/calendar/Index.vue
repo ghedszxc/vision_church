@@ -122,29 +122,11 @@
                         }}
                       </template>
 
-                      <template v-slot:item.inviter_id="{ item }">
-                        <span class="text-truncate">
-                          {{
-                            item.id && discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).inviter_id) ?
-                            `${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).inviter_id).last_name}, ${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).inviter_id).first_name}` : ''
-                          }}
-                        </span>
-                      </template>
-
                       <template v-slot:item.cell_leader_id="{ item }">
                         <span class="text-truncate">
                           {{
                             item.id && discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).cell_leader_id) ?
                             `${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).cell_leader_id).last_name}, ${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).cell_leader_id).first_name}` : ''
-                          }}
-                        </span>
-                      </template>
-                      
-                      <template v-slot:item.primary_leader_id="{ item }">
-                        <span class="text-truncate">
-                          {{
-                            item.id && discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).primary_leader_id) ?
-                            `${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).primary_leader_id).last_name}, ${discipleList.find(find => find.id == discipleList.find(find => find.id == item.id).primary_leader_id).first_name}` : ''
                           }}
                         </span>
                       </template>
@@ -335,9 +317,7 @@ export default {
       { text: 'Address', value: 'address', sortable: false },
       { text: 'Network', value: 'network', sortable: false },
 
-      { text: 'Inviter', value: 'inviter_id', sortable: false },
       { text: 'Cell Leader', value: 'cell_leader_id', sortable: false },
-      { text: 'Primary Leader', value: 'primary_leader_id', sortable: false }
     ],
 
     updateAttendanceDialog: false
@@ -391,7 +371,8 @@ export default {
         this.attendees = []
 
         response.body.map(data => {
-          this.$store.dispatch('addNewAttendee', data.disciple_id)
+          let find_index = this.attendeeList.findIndex(find => find.id == data.disciple_id)
+          find_index == -1 ? this.$store.dispatch('addNewAttendee', data.disciple_id) : null
           if (data.status < 5){
             this.$store.dispatch('updateDiscipleStatus', { id: data.disciple_id, status: data.status, event_id: this.selectedEvent.id })
           }

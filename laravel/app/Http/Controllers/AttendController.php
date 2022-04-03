@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Attend;
 use App\Models\Disciple;
@@ -41,23 +41,26 @@ class AttendController extends Controller
     {
         foreach($request['attendees'] as $attendee)
         {
-            $discipleInfo = Disciple::find($attendee['id']);
+            $checkAttendeeFromEvent = DB::select("SELECT * FROM attends WHERE event_id='$request->event_id' AND disciple_id='$attendee[id]'");
 
-            Attend::create([
-                'disciple_id' => $attendee['id'],
-                'event_id' => $request['event_id'],
-                'status' => $discipleInfo['status'] < 5 ? $discipleInfo['status']+1 : $discipleInfo['status']
-            ]);
+            if (!$checkAttendeeFromEvent) {
+                $discipleInfo = Disciple::find($attendee['id']);
 
-            if ($discipleInfo['status'] < 5){
-                Disciple::where('id', $attendee['id'])->update([
-                    'status' => $discipleInfo['status']+1
+                Attend::create([
+                    'disciple_id' => $attendee['id'],
+                    'event_id' => $request['event_id'],
+                    'status' => $discipleInfo['status'] < 5 ? $discipleInfo['status']+1 : $discipleInfo['status']
                 ]);
+
+                if ($discipleInfo['status'] < 5){
+                    Disciple::where('id', $attendee['id'])->update([
+                        'status' => $discipleInfo['status']+1
+                    ]);
+                }
             }
         }
 
         return Attend::select('*')->where('attends.event_id', $request['event_id'])->get();
-        // return Disciple::select("*", DB::raw("CONCAT(disciples.last_name,', ',disciples.first_name) as full_name"))->where('is_archive', 0)->orderBy('last_name', 'ASC')->get();
     }
 
     /**

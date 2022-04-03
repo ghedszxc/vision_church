@@ -3,19 +3,14 @@ import router from '../router/index'
 export default function(Vue) {
   Vue.auth = {
     setToken(auth, expiration) {
-      localStorage.setItem("token", auth.token);
-      // localStorage.setItem('storedData', auth.user);
-      localStorage.setItem("expiration", expiration);
-      
       sessionStorage.setItem("token", auth.token);
       // sessionStorage.setItem('storedData', auth.user);
       sessionStorage.setItem("expiration", expiration);
-      
     },
 
     getToken() {
-      let token = sessionStorage.getItem("token") ? sessionStorage.getItem("token") : localStorage.getItem("token")
-      let expiration = sessionStorage.getItem("expiration") ? sessionStorage.getItem("expiration") : localStorage.getItem("expiration")
+      let token = sessionStorage.getItem("token") ? sessionStorage.getItem("token") : null
+      let expiration = sessionStorage.getItem("expiration") ? sessionStorage.getItem("expiration") : null
 
       if (!token || !expiration) return null;
 
@@ -32,9 +27,6 @@ export default function(Vue) {
     destoryToken() {
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("expiration");
-
-      localStorage.removeItem("token");
-      localStorage.removeItem("expiration");
     },
 
     isAuthenticated() {
