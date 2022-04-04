@@ -4,12 +4,12 @@
             DASHBOARD
         </div>
         <v-layout wrap>
-            <v-flex xs12 md9>
-                <v-card class="mt-4" style="width: 99%;">
+            <v-flex xs12 md3 class="pr-3">
+                <v-card class="mt-4">
                     <v-card-text>
-                        <v-subheader class="title black--text text-truncate">Monthly Reports</v-subheader>
+                        <v-subheader class="title black--text text-truncate">Monthly Attendees</v-subheader>
                         <div>
-                            {{monthlyReport}}
+                            <apexchart type="pie" height="291" :options="monthlyReport" :series="monthlyReport.series"></apexchart>
                         </div>
                     </v-card-text>
                 </v-card>
@@ -57,11 +57,55 @@
 export default {
     data:() => ({
         birthdayCelebrants: [],
-        monthlyReport: []
+
+        monthlyReport: {
+            legend: { position: 'bottom', markers: { height: 13, width: 13, radius: 2 } },
+            dataLabels: {
+                formatter: function (val, opts) {
+                    return opts.w.globals.seriesTotals[opts.seriesIndex]
+                }
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: false,
+                            total: {
+                                show: true,
+                                // color: '#FFFFFF',
+                                fontSize: '14px',
+                                fontWeight: 'bold',
+                                fontFamily: 'Segoe UI'
+                            },
+                            value: {
+                                show: true,
+
+                                // color: '#FFFFFF',
+                                fontSize: "12px",
+                                fontWeight: 'bold',
+                                fontFamily: 'Segoe UI'
+                            }
+                        }
+                    }
+                }
+            },
+
+            colors: [],
+            series: [],
+            labels: []
+        },
     }),
     mounted(){
         this.$http.get('api/disciple/getBirthdayCelebantThisWeek/1').then(res => { this.birthdayCelebrants = res.body }) // BIRTHDAY CELEBRANT
-            this.$http.get('api/attendee/monthlyReport/1').then(res => { this.monthlyReport = res.body }) // MONTHLY REPORTING
+        
+         // MONTHLY REPORTING
+        this.$http.get('api/attendee/monthlyReport/1').then(res => {
+            res.body.map(value =>{
+                this.monthlyReport.labels.push(this.statusList.find(find => find.id == value.status).text)
+                this.monthlyReport.colors.push(this.statusList.find(find => find.id == value.status).hex)
+                this.monthlyReport.series.push(value.total)
+            })
+        })
 
     },
     methods:{

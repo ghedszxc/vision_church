@@ -6,10 +6,14 @@ import router from './router'
 import store from './store'
 import vueResource from 'vue-resource'
 import globalMixin from './mixins/global'
+import apexCharts from 'vue-apexcharts'
 
 Vue.use(Auth)
 Vue.use(vueResource)
 Vue.mixin(globalMixin)
+
+Vue.use(apexCharts)
+Vue.component('apexchart', apexCharts)
 
 Vue.http.options.root = "http://127.0.0.1:8000"
 // Vue.http.options.root = "https://vision.kplindustrialsupply.com"
