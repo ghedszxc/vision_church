@@ -118,6 +118,13 @@ class AttendController extends Controller
         ]);
     }
 
+    public function weeklyReport($id)
+    {
+        $firstDay = Carbon::now()->startOfWeek(Carbon::SUNDAY)->format('Y-m-d');
+        $lastDay = Carbon::now()->endOfWeek(Carbon::SATURDAY)->format('Y-m-d');
+        return Attend::select('status', DB::raw('count(*) as total'))->groupBy('status')->whereBetween('created_at', [$firstDay, $lastDay])->get();
+    }
+
     public function monthlyReport($id)
     {
         $firstDay = Carbon::now()->firstOfMonth()->format('Y-m-d');

@@ -49,7 +49,7 @@
             {{selectedEvent.name}}
             <v-spacer></v-spacer>
             
-            <add-disciple :title_text="'Register 1T'" :event_id="selectedEvent.id" :checkTodayDisabled="checkTodayDisabled()"></add-disciple>
+            <add-disciple :title_text="'Register 1T'" :event_id="selectedEvent.id"></add-disciple> <!-- :checkTodayDisabled="checkTodayDisabled()" -->
             <v-btn class="error" @click="onHideEventInfoDialog()">
               Close
             </v-btn>
@@ -65,12 +65,12 @@
                   <v-flex xs12>
                     <v-btn small rounded class="primary mx-2" @click="newAttendee()"
                       :text="attendees.length != discipleList.length"
-                      :disabled="attendeeList.length == discipleList.length || checkTodayDisabled()">
+                      :disabled="attendeeList.length == discipleList.length"> <!--  || checkTodayDisabled() -->
                       Add Attendee
                     </v-btn>
 
                     <v-btn small rounded text class="success" @click="updateAttendanceDialog = true"
-                      :disabled="!attendees.length ? true : false || checkTodayDisabled()">
+                      :disabled="!attendees.length ? true : false"> <!--  || checkTodayDisabled() -->
                       Update Attendance
                     </v-btn>
                   </v-flex>

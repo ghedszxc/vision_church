@@ -2,15 +2,15 @@
     <div>
         <v-app-bar app class="primary">
             <v-spacer></v-spacer>
-            <v-btn icon :class="$route.path == '/' ? 'primary' : ''" @click="$router.push('/')">
+            <v-btn icon :class="$route.path == '/' ? 'primary hidden-sm-and-down' : 'hidden-sm-and-down'" @click="$router.push('/')">
                 <v-icon :color="$route.path == '/' ? 'white' : ''">mdi-view-dashboard</v-icon>
             </v-btn>
 
-            <v-btn icon :class="$route.path == '/calendar' ? 'primary' : ''" @click="$router.push('/calendar')">
+            <v-btn icon :class="$route.path == '/calendar' ? 'primary hidden-sm-and-down' : 'hidden-sm-and-down'" @click="$router.push('/calendar')">
                 <v-icon :color="$route.path == '/calendar' ? 'white' : ''">mdi-calendar</v-icon>
             </v-btn>
 
-            <v-btn icon :class="$route.path == '/disciple' ? 'primary' : ''" @click="$router.push('/disciple')">
+            <v-btn icon :class="$route.path == '/disciple' ? 'primary hidden-sm-and-down' : 'hidden-sm-and-down'" @click="$router.push('/disciple')">
                 <v-icon :color="$route.path == '/disciple' ? 'white' : ''">mdi-view-list</v-icon>
             </v-btn>
 
