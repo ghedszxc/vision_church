@@ -41,6 +41,11 @@ export default {
             number_only: value => {
                 const pattern = /^[0-9]*$/
                 return pattern.test(value) || 'Numbers only.'
+            },
+
+            time: value => {
+                const pattern = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/
+                return pattern.test(value) || 'Invalid time format.'
             }
         }
     }),
@@ -76,6 +81,6 @@ export default {
             let dd = date.getDate().toString().padStart(2, 0);
 
             return `${year}-${mm}-${dd}`;
-        },
+        }
     }
 }

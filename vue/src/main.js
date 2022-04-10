@@ -20,16 +20,16 @@ Vue.http.options.root = "https://vision.kplindustrialsupply.com"
 
 Vue.config.productionTip = false
 
-// Vue.http.interceptors.push((request, next) => {
-//   request.headers.set("Authorization", "Bearer " + Vue.auth.getToken());
-//   next();
-// });
+Vue.http.interceptors.push((request, next) => {
+  request.headers.set("Authorization", "Bearer " + Vue.auth.getToken());
+  next();
+});
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.forVisitors)) {
     Vue.auth.isAuthenticated() ? next({ path: '/dashboard' }) : next()
   } else if(to.matched.some(record => record.meta.forAuth)){
-    !Vue.auth.isAuthenticated() ? next({ path: '/login' }) : next()
+    !Vue.auth.isAuthenticated() ? next({ path: '/' }) : next()
   } else next()
 })
 

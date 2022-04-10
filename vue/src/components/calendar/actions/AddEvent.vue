@@ -16,25 +16,27 @@
                 </v-card-title>
                 <v-card-text class="mt-4">
                     <v-form ref="form">
-                        <v-layout wrap>
-                            <v-flex xs12 class="mb-7">
+                        <v-row>
+                            <v-col cols="12">
                                 <span class="overline">Basic Information</span>
                                 <v-divider style="margin: -1.7% 0% 0% 17%;"></v-divider>
-                            </v-flex>
-                            <v-flex xs12 md4>
+                            </v-col>
+                            
+                            
+                            <v-col cols="12" sm="4">
                                 <v-select
                                     v-model="form.name"
                                     label="Event Name"
                                     placeholder="Event Name"
 
                                     :items="events"
-                                    outlined
+                                    outlined dense
 
                                     :disabled="formDisabled"
                                     :rules="[field_rules.required]"
                                 ></v-select>
-                            </v-flex>
-                            <v-flex xs12 md4 class="px-2">
+                            </v-col>
+                            <v-col cols="12" sm="4">
                                 <v-menu
                                     v-model="menu_01"
                                     :close-on-content-click="false"
@@ -47,10 +49,10 @@
                                             v-model="form.start"
                                             placeholder="Starts At"
                                             label="Starts At"
-                                            outlined
+                                            outlined dense
 
                                             :disabled="formDisabled"
-                                            :rules="[field_rules.required]"
+                                            :rules="[field_rules.required, field_rules.time]"
 
                                             v-bind="attrs"
                                             v-on="on"
@@ -58,8 +60,8 @@
                                     </template>
                                     <v-time-picker landscape v-model="form.start"></v-time-picker>
                                 </v-menu>
-                            </v-flex>
-                            <v-flex xs12 md4>
+                            </v-col>
+                            <v-col cols="12" sm="4">
                                 <v-menu
                                     v-model="menu_02"
                                     :close-on-content-click="false"
@@ -72,10 +74,10 @@
                                             v-model="form.end"
                                             placeholder="Ends At"
                                             label="Ends At"
-                                            outlined
+                                            outlined dense
                                             
                                             :disabled="formDisabled"
-                                            :rules="[field_rules.required]"
+                                            :rules="[field_rules.required, field_rules.time]"
 
                                             v-bind="attrs"
                                             v-on="on"
@@ -83,8 +85,8 @@
                                     </template>
                                     <v-time-picker landscape v-model="form.end"></v-time-picker>
                                 </v-menu>
-                            </v-flex>
-                        </v-layout>
+                            </v-col>
+                        </v-row>
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
@@ -143,10 +145,10 @@ export default {
             }
 
             
-            this.formDisabled = true
             if (this.$refs.form.validate()) {
-                this.$http.post('api/event', data).then(response => {
-                    this.$store.dispatch('addNewEvent', response.body)
+                this.formDisabled = true
+                this.$http.post('api/event', data).then(res => {
+                    this.$store.dispatch('addNewEvent', res.body)
                     this.hideDialog()
                 })
             }

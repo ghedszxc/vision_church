@@ -278,7 +278,7 @@
     </div>
 </template>
 <script>
-import createEvent from './actions/Add.vue'
+import createEvent from './actions/AddEvent.vue'
 import addDisciple from '../report/actions/Add.vue'
 export default {
   components: {

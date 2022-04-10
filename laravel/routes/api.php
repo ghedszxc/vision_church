@@ -23,26 +23,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// // // Authenticated APIs
-// Route::group(["middleware" =>'auth:sanctum'], function() {
-//     // Route::resource('disciple', DiscipleController::class);
-//     // // Route::get('disciple/sampleRoute/{id}', [DiscipleController::class, 'sampleRoute']);
-// });
-
 
 Route::post('auth/authLogin', [AuthController::class, 'authLogin']);
 
-Route::middleware('api')->group(function () {
+// Authenticated APIs
+Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::resource('auth', AuthController::class);
     Route::get('auth/getAuthuser/{id}', [AuthController::class, 'getAuthuser']);
-    
 
     // DISCIPLE
     Route::resource('disciple', DiscipleController::class);
     Route::put('disciple/updateStatus/{id}', [DiscipleController::class, 'updateStatus']);
     Route::put('disciple/updateIsArchive/{id}', [DiscipleController::class, 'updateIsArchive']);
     Route::get('disciple/getInactiveDisiples/{id}', [DiscipleController::class, 'getInactiveDisiples']);
-    Route::get('disciple/getBirthdayCelebantThisWeek/{id}', [DiscipleController::class, 'getBirthdayCelebantThisWeek']);
+    Route::post('disciple/getBirthdayCelebantThisWeek', [DiscipleController::class, 'getBirthdayCelebantThisWeek']);
     
     // EVENT
     Route::resource('event', EventController::class);
@@ -52,5 +46,4 @@ Route::middleware('api')->group(function () {
     Route::post('attendee/addFirstTimer', [AttendController::class, 'addFirstTimer']);
     Route::get('attendee/weeklyReport/{id}', [AttendController::class, 'weeklyReport']);
     Route::get('attendee/monthlyReport/{id}', [AttendController::class, 'monthlyReport']);
-    
 });

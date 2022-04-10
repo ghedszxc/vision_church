@@ -11,7 +11,7 @@ import PageNotFound from '@/components/globalLayouts/PageNotFound.vue'
 Vue.use(VueRouter)
 const routes = [
   {
-    path: '/login',
+    path: '/',
     component: Login,
     meta: {
       forVisitors: true
@@ -25,7 +25,7 @@ const routes = [
     },
     children: [
       {
-        path: '/',
+        path: '/dashboard',
         component: Dashboard,
       },
       {

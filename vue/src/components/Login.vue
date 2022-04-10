@@ -35,6 +35,7 @@
     </div>
 </template>
 <script>
+import Vue from 'vue'
 export default {
     data:() => ({
         username: '',
@@ -47,10 +48,10 @@ export default {
             this.$http.post('api/auth/authLogin', { username: this.username, password: this.password }).then(res => {
                 if (typeof res.body == 'object') {
                     let today = new Date()
-                    today.setTime(today.getTime() + (7*24*60*60*1000))
-                    this.$auth.setToken(res.body, today.getTime());
+                    today.setTime(today.getTime() + (24*60*60*1000))
+                    Vue.auth.setToken(res.body, today.getTime())
 
-                    this.$router.push('/')
+                    this.$router.push('/dashboard')
                     this.$store.commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `Login success` })
                     
                 } else {

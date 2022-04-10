@@ -2,8 +2,8 @@
     <div>
         <v-app-bar app class="primary">
             <v-spacer></v-spacer>
-            <v-btn icon :class="$route.path == '/' ? 'primary hidden-sm-and-down' : 'hidden-sm-and-down'" @click="$router.push('/')">
-                <v-icon :color="$route.path == '/' ? 'white' : ''">mdi-view-dashboard</v-icon>
+            <v-btn icon :class="$route.path == '/dashboard' ? 'primary hidden-sm-and-down' : 'hidden-sm-and-down'" @click="$router.push('/dashboard')">
+                <v-icon :color="$route.path == '/dashboard' ? 'white' : ''">mdi-view-dashboard</v-icon>
             </v-btn>
 
             <v-btn icon :class="$route.path == '/calendar' ? 'primary hidden-sm-and-down' : 'hidden-sm-and-down'" @click="$router.push('/calendar')">
@@ -25,9 +25,9 @@
                     </v-btn>
                 </template>
                 <v-list>
-                    <v-list-item @click="$router.push('/')" class="hidden-md-and-up">
+                    <v-list-item @click="$router.push('/dashboard')" class="hidden-md-and-up">
                         <v-list-item-avatar>
-                            <v-icon :color="$route.path == '/' ? 'primary' : ''">mdi-view-dashboard</v-icon>
+                            <v-icon :color="$route.path == '/dashboard' ? 'primary' : ''">mdi-view-dashboard</v-icon>
                         </v-list-item-avatar>
                         <v-list-item-title>Dashboard</v-list-item-title>
                     </v-list-item>
@@ -75,7 +75,7 @@ export default {
         logOutUser(){
             Vue.auth.destoryToken()
             this.$store.commit('UPDATE_SNACKBAR', { snackbar: true, color: 'success', message: `Logging out.` })
-            setTimeout(() => { this.$router.push('/login') }, 1000);
+            setTimeout(() => { this.$router.push('/') }, 1000);
         }
     }
 }
