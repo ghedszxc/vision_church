@@ -27,7 +27,7 @@
             <add-disciple :title_text="'Register Disciple'"></add-disciple>
           </v-flex>
         </v-layout>
-        <v-data-table :headers="headers" :items="showTab == 1 ? discipleListReport : archivedDiscipleListReport" v-if="!tableLoad">
+        <v-data-table :headers="headers" :items="showTab == 1 ? discipleListReport : archivedDiscipleListReport">
           <template v-slot:item.network="{ item }">
             {{networkList.find(find => find.id == item.network).text}}
           </template>

@@ -41,6 +41,13 @@
                                         <v-list-item-title>{{`${data.last_name}, ${data.first_name}`}}</v-list-item-title>
                                         <v-list-item-subtitle v-html="data.birthday"></v-list-item-subtitle>
                                     </v-list-item-content>
+
+                                    <v-list-item-action v-if="checkBirthdayPassed(data.birthday)">
+                                        <v-icon v-if="checkBirthdayPassed(data.birthday) == true" color="primary">mdi-check-bold</v-icon>
+                                        <v-chip v-else class="success" small>
+                                            Today's Birthday
+                                        </v-chip>
+                                    </v-list-item-action>
                                 </v-list-item>
                                 
                                 <v-divider :key="`div-${data.id}`" inset></v-divider>
@@ -63,6 +70,7 @@
     </div>
 </template>
 <script>
+import moment from 'moment-timezone'
 export default {
     data:() => ({
         birthdayCelebrants: [],
@@ -114,9 +122,13 @@ export default {
             let last = first + 6
 
             return {
-                first: { day: new Date(dateNow.setDate(first)).getDate(), month: new Date(dateNow.setDate(first)).getMonth() },
-                last: { day: new Date(dateNow.setDate(last)).getDate(), month: new Date(dateNow.setDate(last)).getMonth() } 
+                first: { day: new Date(dateNow.setDate(first)).getDate(), month: new Date(dateNow.setDate(first)).getMonth()+1 },
+                last: { day: new Date(dateNow.setDate(last)).getDate(), month: new Date(dateNow.setDate(last)).getMonth()+1 } 
             }
+        },
+        checkBirthdayPassed(birthday){
+            return birthday.substring(5) < moment().tz("Asia/Manila").format("MM-DD") ? true :
+                   birthday.substring(5) == moment().tz("Asia/Manila").format("MM-DD") ? 'today' : false;
         }
     }
 }
