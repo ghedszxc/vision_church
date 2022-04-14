@@ -24,14 +24,13 @@
                     </v-card-text>
                 </v-card>
             </v-flex>
-            <v-flex xs12 md3>
+            <v-flex xs12 md4>
                 <v-card class="mt-4" style="width: 99%;">
                     <v-card-text>
                         <v-subheader class="title black--text text-truncate">Birthday Celebrant This Week</v-subheader>
                         <v-list class="pr-4 my-2" :style="{ height: `${windowSize.height/5}px`, overflowY: 'auto', overflowX: 'hidden' }" v-if="birthdayCelebrants.length">
                             <template v-for="data in birthdayCelebrants">
-                                <!-- <v-divider :key="`div-${data.full_name}`" inset></v-divider> -->
-                                <v-list-item :key="data.full_name">
+                                <v-list-item :key="data.id">
                                     <v-list-item-avatar>
                                         <v-avatar class="white--text overline" size="40" :color="networkList.find(find => find.id == data.network).color">
                                             {{data.last_name.split('')[0]}}{{data.first_name.split('')[0]}}
@@ -39,12 +38,12 @@
                                     </v-list-item-avatar>
 
                                     <v-list-item-content>
-                                        <v-list-item-title v-html="data.full_name"></v-list-item-title>
+                                        <v-list-item-title>{{`${data.last_name}, ${data.first_name}`}}</v-list-item-title>
                                         <v-list-item-subtitle v-html="data.birthday"></v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
                                 
-                                <v-divider :key="`div-${data.full_name}`" inset></v-divider>
+                                <v-divider :key="`div-${data.id}`" inset></v-divider>
                             </template>
                         </v-list>
                         <div v-else class="overline text-center py-2">
@@ -87,11 +86,11 @@ export default {
         },
     }),
     mounted(){
-        this.$http.get('api/disciple/getBirthdayCelebantThisWeek/1').then(res => { this.birthdayCelebrants = res.body }) // BIRTHDAY CELEBRANT
+        this.$http.post('api/disciple/getBirthdayCelebantThisWeek', this.getFirstAndLastDayThisWeek()).then(res => { this.birthdayCelebrants = res.body }) // BIRTHDAY CELEBRANT
         
          // WEEKLY REPORTING
         this.$http.get('api/attendee/weeklyReport/1').then(res => {
-            res.body.map(value =>{
+            res.body.map(value => {
                 this.weeklyReport.labels.push(this.statusList.find(find => find.id == value.status).text)
                 this.weeklyReport.colors.push(this.statusList.find(find => find.id == value.status).hex)
                 this.weeklyReport.series.push(value.total)
@@ -100,7 +99,7 @@ export default {
         
          // MONTHLY REPORTING
         this.$http.get('api/attendee/monthlyReport/1').then(res => {
-            res.body.map(value =>{
+            res.body.map(value => {
                 this.monthlyReport.labels.push(this.statusList.find(find => find.id == value.status).text)
                 this.monthlyReport.colors.push(this.statusList.find(find => find.id == value.status).hex)
                 this.monthlyReport.series.push(value.total)
@@ -109,10 +108,15 @@ export default {
 
     },
     methods:{
-        addUser(){
-            // this.$http.post('api/auth', { name: 'z', username: 'z', password: 'z'}).then(response => {
-            //     console.log("?", response.body)
-            // })
+        getFirstAndLastDayThisWeek(){
+            let dateNow = new Date
+            let first = dateNow.getDate() - dateNow.getDay()
+            let last = first + 6
+
+            return {
+                first: { day: new Date(dateNow.setDate(first)).getDate(), month: new Date(dateNow.setDate(first)).getMonth() },
+                last: { day: new Date(dateNow.setDate(last)).getDate(), month: new Date(dateNow.setDate(last)).getMonth() } 
+            }
         }
     }
 }
