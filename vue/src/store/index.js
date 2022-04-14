@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+import users from './users'
 
+Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
+    'users': users
   },
   state: {
     // GLOBAL

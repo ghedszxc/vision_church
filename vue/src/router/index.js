@@ -5,7 +5,7 @@ import Index from '@/components/globalLayouts/Index.vue'
 import Dashboard from '@/components/dashboard/Index.vue'
 import Calendar from '@/components/calendar/Index.vue'
 import Disciple from '@/components/report/Index.vue'
-// import User from '@/components/userManagement/Index.vue'
+import User from '@/components/userManagement/Index.vue'
 
 import PageNotFound from '@/components/globalLayouts/PageNotFound.vue'
 Vue.use(VueRouter)
@@ -36,10 +36,10 @@ const routes = [
         path: '/disciple',
         component: Disciple,
       },
-      // {
-      //   path: '/user',
-      //   component: User,
-      // },
+      {
+        path: '/user',
+        component: User,
+      },
     ]
   },
   { path: "*", component: PageNotFound }

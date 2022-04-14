@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-        //
+        return User::select('id', 'name', 'username')->get();
     }
 
     /**
@@ -40,21 +40,21 @@ class AuthController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create([
-            'name' => $request['name'],
-            'username' => $request['username'],
-            'password' => bcrypt($request['password']),
-        ]);
+        try {
+            $user = User::create([
+                'name' => $request['name'],
+                'username' => $request['username'],
+                'password' => bcrypt($request['password']),
+            ]);
 
+            return User::select('id', 'name', 'username')->where('id', $user->id)->first();
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
+        } catch (\Illuminate\Database\QueryException $exception) {
+            return [
+                'status' => 'err',
+                'message' => $exception->errorInfo[2]
+            ];
+        }
     }
 
     /**
@@ -104,7 +104,7 @@ class AuthController extends Controller
 
     public function getAuthuser($id)
     {
-        return User::where('username', $id)->first();
+        return User::select('id', 'name', 'username')->where('username', $id)->first();
     }
 
     public function authLogin(Request $request)
