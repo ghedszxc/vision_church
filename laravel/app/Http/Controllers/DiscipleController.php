@@ -163,6 +163,8 @@ class DiscipleController extends Controller
         ->whereMonth('birthday', '<=', $request['last']['month'])
         ->whereDay('birthday', '<=', $request['last']['day'])
 
+        ->where('status', 5)
+
         ->orderByRaw('DAYOFYEAR(birthday)')
         ->get();
     }

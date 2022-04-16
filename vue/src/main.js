@@ -15,8 +15,8 @@ Vue.mixin(globalMixin)
 Vue.use(apexCharts)
 Vue.component('apexchart', apexCharts)
 
-Vue.http.options.root = "http://127.0.0.1:8000"
-// Vue.http.options.root = "https://vision.kplindustrialsupply.com"
+// Vue.http.options.root = "http://127.0.0.1:8000"
+Vue.http.options.root = "https://vision.kplindustrialsupply.com"
 
 Vue.config.productionTip = false
 
